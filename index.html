@@ -2286,15 +2286,22 @@ const MY_BIDS = [
 ];
 
 /* ---- Mock chat threads ---------------------------------------------------*/
-/* ---- Mock chat threads ---------------------------------------------------*/
 const CHATS = [
+  {
+    name: "Swati Rawat",
+    initials: "SR",
+    photo: "https://media.licdn.com/dms/image/v2/D5603AQE8z-enSqcCYQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1731760067163?e=2147483647&v=beta&t=c_TGNiJSjUIPUFYRzoNw845BgcKg0MwPYq4znNIVpnk",
+    preview: "Okay Rishabh, please share her  CV.",
+    time: "03:55 PM",
+    date: "Today"
+  },
   {
     name: "Sanyam Golem",
     initials: "SG",
     photo: "https://instagram.fdel10-1.fna.fbcdn.net/v/t51.75761-15/484886994_18490016137048864_1413449798259802763_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&_nc_map=urlgen_bucketless&ig_cache_key=MzU5MTAyNTQ5MTAxNDM1NTg3OQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTQ0MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=Vhq9i-bBNhYQ7kNvwHL-hV2&_nc_oc=AdoT809af2OHlviZMczptZhgwmgS63DnS0MEN5_0MJbRvD-ZvXgNnPCPy0O7sohfUfE&_nc_zt=23&_nc_ht=instagram.fdel10-1.fna&_nc_gid=hd3-M6NH9u2iT5bFBlA9vQ&_nc_ss=7b289&oh=00_AQJBxzX8eCSZb3P6iYtLmndgbyt2bb5_ITHQRmbC_8O3dw&oe=6AACBEDF",
     preview: "aur let's talk whenever you are free.",
     time: "07:21 PM",
-    date: "Today"
+    date: "14 Sep"
   },
   {
     name: "Ameya Attri",
@@ -2303,14 +2310,6 @@ const CHATS = [
     preview: "It's okay captain, one day for sure with you. 🛬",
     time: "08:25 PM",
     date: "12 Sep"
-  },
-  {
-    name: "Swati Rawat",
-    initials: "SR",
-    photo: "https://media.licdn.com/dms/image/v2/D5603AQE8z-enSqcCYQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1731760067163?e=2147483647&v=beta&t=c_TGNiJSjUIPUFYRzoNw845BgcKg0MwPYq4znNIVpnk",
-    preview: "Hey Rishabh, I am Swati HR at Air India. I will be handling your payroll, leaves and everything regarding operations. You can connect me here for any query or mail me on swati.rathi@airindia.com thank you.",
-    time: "10:15 AM",
-    date: "10 Sep"
   },
   {
     name: "Capt. C. V. Madhu",
@@ -2324,7 +2323,13 @@ const CHATS = [
 
 const CHAT_MESSAGES = [
   [
-    { direction: "incoming", text: "Hi Rishabh, We will be operating the Vienna sector together.", time: "07:21 PM", date: "Today, 14 Sep 2026" },
+    { direction: "incoming", text: "Hey Rishabh, I am Swati HR at Air India. I will be handling your payroll, leaves and everything regarding operations. You can connect me here for any query or mail me on swati.rathi@airindia.com thank you.", time: "10:15 AM", date: "10 Sep 2026" },
+    { direction: "outgoing", text: "Thank you for connecting Swati. Yes, I will be pinging you for queries.", time: "04:04 PM" },
+    { direction: "outgoing", text: "Hey Swati I have referal for HR roll. She has good expereince.", time: "03:38 PM", date: "Today, 16 Sep 2026" },
+    { direction: "incoming", text: "Okay Rishabh, please share her  CV.", time: "03:55 PM" }
+  ],
+  [
+    { direction: "incoming", text: "Hi Rishabh, We will be operating the Vienna sector together.", time: "07:21 PM", date: "14 Sep 2026" },
     { direction: "incoming", text: "Yaar flight plan bana lena", time: "07:21 PM" },
     { direction: "incoming", text: "aur let's talk whenever you are free.", time: "07:21 PM" }
   ],
@@ -2333,10 +2338,6 @@ const CHAT_MESSAGES = [
     { direction: "outgoing", text: "Aur Kaptaan sahab. Theek hai banata hu. Baaki bata dunga yahi.", time: "03:53 PM" },
     { direction: "incoming", text: "Dhokha de diya na Rishabh🥲", time: "08:13 PM" },
     { direction: "outgoing", text: "It's okay captain, one day for sure with you. 🛬", time: "08:25 PM" }
-  ],
-  [
-    { direction: "incoming", text: "Hey Rishabh, I am Swati HR at Air India. I will be handling your payroll, leaves and everything regarding operations. You can connect me here for any query or mail me on swati.rathi@airindia.com thank you.", time: "10:15 AM", date: "10 Sep 2026" },
-    { direction: "outgoing", text: "Thank you for connecting Swati. Yes, I will be pinging you for queries.", time: "04:04 PM" }
   ],
   [
     { direction: "incoming", text: "Hey Rishabh, this is the captain CV Madhu. I will be undertaking your flight operations skills on 30th. Please be prepare and all the best. You can ping me here in case of any assistance.", time: "9:41 PM", date: "08 Sep 2026" },
