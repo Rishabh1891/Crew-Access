@@ -2001,6 +2001,20 @@ const AIRPORTS = {
       { name:"Approach",      val:"132.0 / 129.4" },
       { name:"Departures",    val:"118.9 / 129.4" }
     ]
+  },
+  CCU: {
+    name: "Netaji Subhash Chandra Bose International Airport",
+    icao: "VECC", iata: "CCU",
+    city: "Kolkata, India",
+    elevation: "16 ft (5 m)",
+    timezone: "IST (UTC +5:30)",
+    dispatch: "Air India Flight Operations, Integrated Terminal, NSCBI Airport, Dum Dum, Kolkata – 700052",
+    frequencies: [
+      { name:"Tower",         val:"118.1 / 118.65" },
+      { name:"Ground",        val:"121.9" },
+      { name:"ATIS",          val:"127.85" },
+      { name:"Approach",      val:"120.1 / 127.9" }
+    ]
   }
 };
 
@@ -2065,11 +2079,12 @@ const ROSTER = {
   ],
   "2026-09-17": [{type:"off", note:"Rest"}],
   "2026-09-18": [{type:"off", note:"Rest"}],
-  "2026-09-19": [
-    {type:"flight", flightNo:"AI887", aircraft:"B777-300ER", dep:"DEL", arr:"BOM", depTime:"07:00", arrTime:"09:15", airtime:"02h 15m", note:"Terminal 3 → Terminal 2 · Widebody domestic", crew:{captains:["Ameya Attri"],firstOfficers:["Rishabh Tripathi"],cabin:["Shreya Nair","Kritika Reddy","Priya Sharma","Rahul Verma"]}},
-    {type:"flight", flightNo:"AI687", aircraft:"B777-300ER", dep:"BOM", arr:"DEL", depTime:"11:30", arrTime:"13:45", airtime:"02h 15m", note:"Terminal 2 → Terminal 3", crew:{captains:["Ameya Attri"],firstOfficers:["Rishabh Tripathi"],cabin:["Shreya Nair","Kritika Reddy","Priya Sharma","Rahul Verma"]}}
+  "2026-09-19": [{type:"medical", location:"AFCME Subroto Park, New Delhi", start:"08:30", end:"15:30", note:"Class 1 Medical Renewal Examination · Air Force Central Medical Establishment (AFCME), Subroto Park, New Delhi – 110010"}],
+  "2026-09-20": [
+    {type:"flight", flightNo:"AI173", aircraft:"B777-300ER", dep:"DEL", arr:"CCU", depTime:"00:05", arrTime:"02:20", airtime:"02h 15m", note:"Terminal 3 → Netaji Subhash Chandra Bose International Airport", crew:{captains:["Ameya Attri"],firstOfficers:["Rishabh Tripathi"],cabin:["Shreya Nair","Kritika Reddy","Priya Sharma","Rahul Verma"]}},
+    {type:"layover", location:"Kolkata, India", start:"03:15", end:"16:00", hotel:{name:"Taj Bengal, Kolkata", address:"34B, Belvedere Rd, Alipore, Kolkata, West Bengal 700027", phone:"+91 33 6612 3939", transport:"Airline crew coach from NSCBI Airport (CCU)", checkIn:"03:15", checkOut:"16:00"}, note:"Domestic layover · Taj Bengal, Kolkata"},
+    {type:"flight", flightNo:"AI174", aircraft:"B777-300ER", dep:"CCU", arr:"DEL", depTime:"17:50", arrTime:"20:15", airtime:"02h 25m", note:"Netaji Subhash Chandra Bose International Airport → Terminal 3", crew:{captains:["Ameya Attri"],firstOfficers:["Rishabh Tripathi"],cabin:["Shreya Nair","Kritika Reddy","Priya Sharma","Rahul Verma"]}}
   ],
-  "2026-09-20": [{type:"medical", location:"AFCME Subroto Park, New Delhi", start:"08:30", end:"15:30", note:"Class 1 Medical Renewal Examination · Air Force Central Medical Establishment (AFCME), Subroto Park, New Delhi – 110010"}],
   "2026-09-21": [
     {type:"flight", flightNo:"AIC308", aircraft:"B777-300ER", dep:"DEL", arr:"MEL", depTime:"02:55", arrTime:"19:40", airtime:"12h 15m", note:"Terminal 3 → Melbourne Airport (T2) · International Long-Haul", crew:{captains:["Shekhar Trichipalli", "Manu Kulkarni"],firstOfficers:["Rashot Ulook Totiya", "Rishabh Tripathi"],cabin:["Karthik Subramanian", "Ananya Menon", "Suresh Padmanabhan", "Keerthy Nambiar", "Vignesh Iyer", "Meera Pillai", "Aditya Nair", "Pooja Hegde", "Aravind Swamy", "Deepika Reddy", "Gokul Prasad", "Sneha Raman", "Chirag Sen", "Divya Venkatesh", "Rahul Sundaram"]}},
     {type:"layover", location:"Melbourne, Australia", start:"20:30", end:"23:30", hotel:{name:"Parkroyal Melbourne Airport", address:"Arrival Dr, Melbourne Airport VIC 3045, Australia", phone:"+61 3 8347 2000", transport:"Direct covered walkway connected to T2 International Terminal", checkIn:"20:30", checkOut:"23:30 on 21 Sep"}, note:"International layover · Parkroyal Melbourne Airport"}
@@ -3558,7 +3573,7 @@ let placedBids = new Set();   // IDs of open-time pairings user has bid on this 
 const IATA_CITY = {
   DEL:"New Delhi", BOM:"Mumbai", HYD:"Hyderabad", LHR:"London",
   SFO:"San Francisco", JFK:"New York", DXB:"Dubai", SIN:"Singapore",
-  MEL:"Melbourne", MAA:"Chennai", VIE:"Vienna"
+  MEL:"Melbourne", MAA:"Chennai", VIE:"Vienna", CCU:"Kolkata"
 };
 
 function getBidPeriodDate(){
