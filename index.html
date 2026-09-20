@@ -197,6 +197,14 @@ input{ font-family:inherit; }
   border:1px dashed var(--line);
 }
 .upnext-transit-tag i{ font-size:10px; color:var(--orange); }
+.upnext-layover-tag{
+  display:flex; align-items:center; gap:11px;
+  background:rgba(180, 80, 124, 0.08); padding:9px 14px; border-radius:12px;
+  border:1px solid rgba(180, 80, 124, 0.22); margin:2px 0;
+}
+.upnext-layover-tag i{ font-size:14px; color:#B4507C; flex-shrink:0; }
+.upnext-layover-title{ font-weight:700; font-size:12.5px; color:var(--ink); }
+.upnext-layover-time{ font-size:11px; color:var(--ink-muted); margin-top:2px; }
 
 /* ---- quick action circles ---- */
 .quick-actions{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:6px; }
@@ -1431,6 +1439,29 @@ body{ background:var(--bg-outer); }
   text-align:center; padding:18px 0 6px;
   font-size:10px; color:var(--ink-muted); letter-spacing:.6px;
 }
+
+/* Roster-driven Board overview */
+.bid-content > *{flex-shrink:0}
+.board-hero{background:linear-gradient(125deg,#153f54,#237b87);color:white;border-radius:20px;padding:22px;margin-bottom:14px}
+.board-eyebrow{font-size:10px;letter-spacing:1.6px;text-transform:uppercase;opacity:.8}
+.board-hero h3{font-size:23px;margin:8px 0;font-weight:600;letter-spacing:-.6px}
+.board-hero p{font-size:12px;line-height:1.6;margin:0;opacity:.85}
+.board-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.board-metric{padding:16px;background:var(--card-alt);border:1px solid var(--line);border-radius:16px}
+.board-metric small,.board-note{font-size:11px;color:var(--ink-soft);line-height:1.6}
+.board-metric strong{display:block;font-family:var(--font-mono);font-size:24px;margin:7px 0;color:#176c79}
+.board-panel{border:1px solid var(--line);border-radius:18px;padding:17px;margin-bottom:14px;background:var(--surface)}
+.board-panel h3{font-size:14px;margin:0 0 5px}.board-panel p{margin:0 0 14px}
+.board-chart{height:155px;display:flex;align-items:stretch;gap:12px;padding-top:12px;border-bottom:1px solid var(--line);background:repeating-linear-gradient(to top,transparent 0,transparent 39px,var(--line) 40px)}
+.board-week{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;min-width:0}
+.board-week span{font-size:9px;color:var(--ink-soft)}.board-bar{width:65%;max-width:34px;background:linear-gradient(#52bdb0,#19798a);border-radius:5px 5px 0 0;min-height:2px}
+.board-week-labels{display:flex;gap:12px;margin-top:8px}.board-week-labels span{flex:1;text-align:center;font-size:9px;color:var(--ink-soft)}
+.board-mix{display:flex;align-items:center;gap:22px;margin:17px 0}.board-donut{width:112px;height:112px;border-radius:50%;display:grid;place-items:center;flex-shrink:0}.board-donut-center{width:82px;height:82px;border-radius:50%;background:var(--surface);display:grid;place-content:center;text-align:center;font-size:11px}.board-donut-center strong{font-size:24px}
+.board-legend{flex:1}.board-legend div{display:flex;align-items:center;gap:7px;font-size:11px;margin:9px 0}.board-dot{height:7px;width:7px;border-radius:50%;flex-shrink:0}.board-legend b{margin-left:auto}
+.board-route{padding:12px 0;border-bottom:1px solid var(--line)}.board-route:last-child{border:0}.board-route-line{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-bottom:7px}.board-track{height:5px;border-radius:4px;background:var(--card)}.board-track div{height:100%;background:#439baf;border-radius:4px}
+.board-action{width:100%;padding:13px;border:0;border-radius:12px;background:var(--card);color:var(--ink);font-weight:600;margin-top:10px}.board-empty{padding:32px 16px;text-align:center;color:var(--ink-soft);line-height:1.7}
+#view-board button:focus-visible{outline:2px solid #19798a;outline-offset:3px}
+
 </style>
 </head>
 <body>
@@ -1598,7 +1629,7 @@ body{ background:var(--bg-outer); }
       <div class="bid-header">
         <button class="bid-back-btn" onclick="switchView('dashboard')"><i class="fa-solid fa-arrow-left"></i></button>
         <div class="bid-header-center">
-          <div class="bid-title">Open Time</div>
+          <div class="bid-title">Crew Board</div>
           <div class="bid-subtitle" id="bid-period-label">September 2026</div>
         </div>
         <button class="bid-notif-btn" onclick="showToast('No new bid notifications','fa-bell')"><i class="fa-regular fa-bell"></i></button>
@@ -1613,7 +1644,8 @@ body{ background:var(--bg-outer); }
 
       <!-- Tabs -->
       <div class="bid-tabs">
-        <button class="bid-tab active" id="bid-tab-open" onclick="switchBidTab('open')">Open Time</button>
+        <button class="bid-tab active" id="bid-tab-overview" onclick="switchBidTab('overview')">Overview</button>
+        <button class="bid-tab" id="bid-tab-open" onclick="switchBidTab('open')">Open Time</button>
         <button class="bid-tab" id="bid-tab-mybids" onclick="switchBidTab('mybids')">
           My Bids
           <span class="bid-count-pill" id="bid-mybids-count">2</span>
@@ -2015,6 +2047,20 @@ const AIRPORTS = {
       { name:"ATIS",          val:"127.85" },
       { name:"Approach",      val:"120.1 / 127.9" }
     ]
+  },
+  ATQ: {
+    name: "Sri Guru Ram Dass Jee International Airport",
+    icao: "VIAR", iata: "ATQ",
+    city: "Amritsar, India",
+    elevation: "756 ft (230 m)",
+    timezone: "IST (UTC +5:30)",
+    dispatch: "Air India Station Operations, Terminal 1, Sri Guru Ram Dass Jee International Airport, Ajnala Rd, Raja Sansi, Amritsar – 143101",
+    frequencies: [
+      { name:"Tower",         val:"118.4 / 118.8" },
+      { name:"Ground",        val:"121.8" },
+      { name:"ATIS",          val:"126.2" },
+      { name:"Approach",      val:"124.9" }
+    ]
   }
 };
 
@@ -2095,8 +2141,14 @@ const ROSTER = {
   ],
   "2026-09-23": [{type:"off", note:"Rest"}],
   "2026-09-24": [{type:"off", note:"Rest"}],
-  "2026-09-25": [{type:"off", note:"Rest"}],
-  "2026-09-26": [{type:"reserve", reserveLocation:"airport", start:"12:00", end:"19:00", note:"ASBY · Starting Queue 38"}],
+  "2026-09-25": [
+    {type:"flight", flightNo:"AIC421", aircraft:"B777-300ER", dep:"DEL", arr:"ATQ", depTime:"08:00", arrTime:"09:20", airtime:"01h 20m", note:"Terminal 3 → Sri Guru Ram Dass Jee International Airport", crew:{captains:["Capt. Iram Habib"],firstOfficers:["Rishabh Tripathi"],cabin:["Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Shivani Malviya","Tenzin Yangchen","Ankit Sahu"]}},
+    {type:"layover", location:"Amritsar, India", start:"10:00", end:"11:30+1", hotel:{name:"Taj Swarna, Amritsar", address:"Majitha Verka Bypass, Amritsar, Punjab 143001", phone:"+91 183 665 8000", transport:"Airline crew coach from ATQ Airport", checkIn:"10:00", checkOut:"11:30 on 26 Sep"}, note:"Domestic layover · Taj Swarna, Amritsar"}
+  ],
+  "2026-09-26": [
+    {type:"flight", flightNo:"AIC422", aircraft:"B777-300ER", dep:"ATQ", arr:"DEL", depTime:"13:10", arrTime:"14:15", airtime:"01h 05m", note:"Sri Guru Ram Dass Jee International Airport → Terminal 3", crew:{captains:["Capt. Iram Habib"],firstOfficers:["Rishabh Tripathi"],cabin:["Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Shivani Malviya","Tenzin Yangchen","Ankit Sahu"]}},
+    {type:"off", start:"14:15", note:"Post-flight mandatory rest"}
+  ],
   "2026-09-27": [{type:"off", note:"Rest"}],
   "2026-09-28": [
     {type:"flight", flightNo:"AI839", aircraft:"B777-300ER", dep:"DEL", arr:"HYD", depTime:"16:00", arrTime:"18:15", airtime:"02h 15m", note:"Terminal 3 → Terminal 1 · Domestic widebody rotation", crew:{captains:["Anny Divya"],firstOfficers:["Rishabh Tripathi"],cabin:["Divya Menon","Samyuktha Rao","Arjun Hegde","Sneha Hedge"]}},
@@ -2616,46 +2668,98 @@ function renderDashboard(){
   const card = document.getElementById("up-next-card");
   const hasActiveDuties = items.some(i => i.type !== "off");
   const isRest = !hasActiveDuties;
-  const isMultiFlight = items.length > 1 && items.every(i => i.type === "flight");
 
-  if (isMultiFlight){
-    const firstFlight = items[0];
-    const lastFlight = items[items.length - 1];
-    const flightNos = items.map(i => i.flightNo).join(" · ");
-    const routeChain = [firstFlight.dep, ...items.map(i => i.arr)].join(" → ");
+  const adjacentDateStr = (dayStr, offset) => {
+    const d = new Date(`${dayStr}T12:00:00`);
+    d.setDate(d.getDate() + offset);
+    return fmt(d);
+  };
+
+  // Check if today or current pairing has 2 flights and 1 layover (or multi-sector)
+  let tripItems = items.filter(i => i.type !== "off");
+  let todayFlights = tripItems.filter(i => i.type === "flight");
+  let todayLayovers = tripItems.filter(i => i.type === "layover");
+
+  if (todayFlights.length === 1 && todayLayovers.length >= 1) {
+    // Check if tomorrow has return flight of pairing
+    const nextDate = adjacentDateStr(date, 1);
+    const nextActive = (SCHEDULE[nextDate] || []).filter(i => i.type !== "off");
+    const nextFlights = nextActive.filter(i => i.type === "flight");
+    if (nextFlights.length >= 1) {
+      tripItems = [...tripItems, nextFlights[0]];
+    }
+  } else if (todayFlights.length === 1 && todayLayovers.length === 0) {
+    // Check if yesterday had flight + layover of pairing
+    const prevDate = adjacentDateStr(date, -1);
+    const prevActive = (SCHEDULE[prevDate] || []).filter(i => i.type !== "off");
+    const prevFlights = prevActive.filter(i => i.type === "flight");
+    const prevLayovers = prevActive.filter(i => i.type === "layover");
+    if (prevFlights.length >= 1 && prevLayovers.length >= 1) {
+      tripItems = [prevFlights[0], prevLayovers[0], ...tripItems];
+    }
+  }
+
+  const allFlights = tripItems.filter(i => i.type === "flight");
+  const allLayovers = tripItems.filter(i => i.type === "layover");
+  const isMultiSectorOrLayover = allFlights.length > 1 || (allFlights.length >= 1 && allLayovers.length >= 1);
+
+  if (isMultiSectorOrLayover){
+    const firstFlight = allFlights[0];
+    const lastFlight = allFlights[allFlights.length - 1];
+    const flightNos = allFlights.map(i => i.flightNo).join(" · ");
+    const routeChain = allFlights.map(f => f.dep).concat([lastFlight.arr]).join(" → ");
+    const layoverHotel = allLayovers[0] ? (allLayovers[0].hotel ? allLayovers[0].hotel.name : allLayovers[0].location) : "";
 
     let sectorsHtml = "";
-    items.forEach((it, idx) => {
-      if (idx > 0){
-        const prevFlight = items[idx - 1];
-        const transitMins = timeDiffMinutes(prevFlight.arrTime, it.depTime);
+    tripItems.forEach((it, idx) => {
+      if (it.type === "flight") {
+        if (idx > 0 && tripItems[idx - 1].type === "flight") {
+          const prevFlight = tripItems[idx - 1];
+          const transitMins = timeDiffMinutes(prevFlight.arrTime, it.depTime);
+          sectorsHtml += `
+            <div class="upnext-transit-tag">
+              <i class="fa-solid fa-arrow-right-arrow-left"></i> Transit at ${it.dep} · ${fmtHrsMins(transitMins)}
+            </div>`;
+        }
+        const airtime = it.airtime || fmtHrsMins(flightDurationMinutes(it));
         sectorsHtml += `
-          <div class="upnext-transit-tag">
-            <i class="fa-solid fa-arrow-right-arrow-left"></i> Transit at ${it.dep} · ${fmtHrsMins(transitMins)}
+          <div class="upnext-sector-item">
+            <div class="upnext-sector-head">
+              <div class="upnext-sector-fno"><i class="fa-solid fa-plane"></i> ${it.flightNo}</div>
+              <div class="upnext-sector-airtime">${airtime}</div>
+            </div>
+            <div class="upnext-route">
+              <div class="up-pt"><div class="code">${it.dep}</div><div class="time">${it.depTime}</div></div>
+              <div class="up-line"><i class="fa-solid fa-plane"></i></div>
+              <div class="up-pt"><div class="code">${it.arr}</div><div class="time">${it.arrTime}</div></div>
+            </div>
+          </div>`;
+      } else if (it.type === "layover") {
+        const hotelName = it.hotel ? it.hotel.name : (it.location || "Layover");
+        const hotelTiming = it.hotel ? (it.hotel.checkIn ? `Check-in ${it.hotel.checkIn}` : (it.start || "")) : (it.start || "");
+        const checkoutTiming = it.hotel && it.hotel.checkOut ? ` · Check-out ${it.hotel.checkOut}` : (it.end ? ` – ${it.end}` : "");
+        sectorsHtml += `
+          <div class="upnext-layover-tag">
+            <i class="fa-solid fa-bed"></i>
+            <div style="flex:1; min-width:0;">
+              <div class="upnext-layover-title">${hotelName}</div>
+              <div class="upnext-layover-time">Layover · ${hotelTiming}${checkoutTiming}${it.location ? ` · ${it.location}` : ""}</div>
+            </div>
           </div>`;
       }
-      const airtime = it.airtime || fmtHrsMins(flightDurationMinutes(it));
-      sectorsHtml += `
-        <div class="upnext-sector-item">
-          <div class="upnext-sector-head">
-            <div class="upnext-sector-fno"><i class="fa-solid fa-plane"></i> ${it.flightNo}</div>
-            <div class="upnext-sector-airtime">${airtime}</div>
-          </div>
-          <div class="upnext-route">
-            <div class="up-pt"><div class="code">${it.dep}</div><div class="time">${it.depTime}</div></div>
-            <div class="up-line"><i class="fa-solid fa-plane"></i></div>
-            <div class="up-pt"><div class="code">${it.arr}</div><div class="time">${it.arrTime}</div></div>
-          </div>
-        </div>`;
     });
+
+    const statusBadgeText = allLayovers.length
+      ? `Published · ${allFlights.length} Sectors + Layover`
+      : `Published · ${allFlights.length} Sectors`;
 
     card.innerHTML = `
       <div class="upnext-top">
         <span class="upnext-label">Today's Roster</span>
-        <span class="upnext-status published">Published · ${items.length} Sectors</span>
+        <span class="upnext-status published">${statusBadgeText}</span>
       </div>
       <div class="upnext-duty" style="margin-bottom:4px;">${flightNos}</div>
-      <div class="upnext-sublabel">${items.length} Sectors · ${routeChain}</div>
+      <div class="upnext-sublabel">${allFlights.length} Sectors · ${routeChain}${layoverHotel ? ` · ${layoverHotel}` : ""}</div>
       <div class="upnext-sectors">${sectorsHtml}</div>
       <div class="upnext-grid">
         <div class="up-field"><div class="up-field-label">Base</div><div class="up-field-value">${firstFlight.dep}</div></div>
@@ -3564,7 +3668,7 @@ function submitSwapRequest(){
    ========================================================================== */
 
 /* ---- State ---- */
-let bidTab = "open";          // "open" | "mybids"
+let bidTab = "overview";          // "overview" | "open" | "mybids"
 let bidFilter = "all";        // filter chip value
 let bidPeriodOffset = 0;      // months offset from current month
 let placedBids = new Set();   // IDs of open-time pairings user has bid on this session
@@ -3573,12 +3677,73 @@ let placedBids = new Set();   // IDs of open-time pairings user has bid on this 
 const IATA_CITY = {
   DEL:"New Delhi", BOM:"Mumbai", HYD:"Hyderabad", LHR:"London",
   SFO:"San Francisco", JFK:"New York", DXB:"Dubai", SIN:"Singapore",
-  MEL:"Melbourne", MAA:"Chennai", VIE:"Vienna", CCU:"Kolkata"
+  MEL:"Melbourne", MAA:"Chennai", VIE:"Vienna", CCU:"Kolkata", ATQ:"Amritsar"
 };
 
 function getBidPeriodDate(){
   const now = new Date();
   return new Date(now.getFullYear(), now.getMonth() + bidPeriodOffset, 1);
+}
+
+
+function boardMonthKey(){
+  const d = getBidPeriodDate();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`;
+}
+function boardHours(minutes){
+  return `${Math.floor(minutes/60)}h ${String(minutes%60).padStart(2,"0")}m`;
+}
+function boardFlightMinutes(item){
+  // Roster airtime is explicit; local airport clocks cannot determine international durations.
+  const match = (item.airtime || "").match(/(\d+)h\s*(\d+)m/);
+  return match ? Number(match[1])*60+Number(match[2]) : null;
+}
+function boardStats(key){
+  const days = Object.entries(ROSTER).filter(([date]) => date.startsWith(key)).sort(([a],[b]) => a.localeCompare(b));
+  const weeks = [0,0,0,0,0], routes = {}, airports = new Set(), crew = new Set();
+  const mix = {Flight:0, Reserve:0, Training:0, Rest:0, Other:0};
+  let minutes=0, sectors=0, missing=0, layovers=0;
+  days.forEach(([date,items]) => {
+    const type = items.some(i=>i.type==='flight') ? 'Flight' : items.some(i=>i.type==='reserve') ? 'Reserve' : items.some(i=>i.type==='training') ? 'Training' : items.every(i=>i.type==='off') ? 'Rest' : 'Other';
+    mix[type]++;
+    items.forEach(item=>{
+      if(item.type==='layover') layovers++;
+      if(item.type!=='flight') return;
+      sectors++;
+      const duration=boardFlightMinutes(item);
+      if(duration===null) missing++; else {minutes+=duration;weeks[Math.floor((Number(date.slice(-2))-1)/7)]+=duration;}
+      airports.add(item.dep);airports.add(item.arr);
+      const route=[item.dep,item.arr].sort().join(' ↔ ');
+      routes[route]=(routes[route]||0)+1;
+      Object.values(item.crew||{}).flat().forEach(name=>crew.add(name));
+    });
+  });
+  return {days,weeks,routes,airports,crew,mix,minutes,sectors,missing,layovers};
+}
+function renderBoardOverview(container){
+  const key=boardMonthKey(), stats=boardStats(key), d=getBidPeriodDate();
+  const totalDays=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();
+  const previous=boardStats(`${new Date(d.getFullYear(),d.getMonth()-1,1).getFullYear()}-${String(new Date(d.getFullYear(),d.getMonth()-1,1).getMonth()+1).padStart(2,'0')}`);
+  const colors=['#26899a','#42b8a7','#bd80a4','#bac7d5','#d6a15c'];
+  let cumulative=0;
+  const gradient=Object.entries(stats.mix).map(([label,count],i)=>{const start=cumulative;cumulative+=stats.days.length?count/stats.days.length*100:0;return `${colors[i]} ${start}% ${cumulative}%`;}).join(',');
+  const max=Math.max(...stats.weeks,1);
+  const routes=Object.entries(stats.routes).sort((a,b)=>b[1]-a[1]);
+  container.innerHTML=`
+    <div class="board-hero"><div class="board-eyebrow">Your roster, at a glance</div><h3>Every sector. A bigger picture.</h3><p>${stats.days.length} of ${totalDays} days recorded · ${CURRENT_USER.base} base · ${CURRENT_USER.aircraft}</p></div>
+    <p class="board-note">Calculated from your saved roster · Scheduled activity, not live operational data.</p>
+    ${!stats.days.length?`<div class="board-panel board-empty"><i class="fa-regular fa-calendar" aria-hidden="true"></i><h3>No roster for this month</h3>Select another month to explore your flying activity. Unrecorded days are not counted as rest.</div><button class="board-action" onclick="switchBidTab('open')">Explore open time <i class="fa-solid fa-arrow-right"></i></button>`:`
+    <div class="board-metrics">
+      <div class="board-metric"><small>Scheduled flight time</small><strong>${boardHours(stats.minutes)}</strong><small>${previous.days.length?`${previous.minutes<=stats.minutes?'+':'−'}${boardHours(Math.abs(stats.minutes-previous.minutes))} vs prior month`:'No prior-month comparison'}</small></div>
+      <div class="board-metric"><small>Flight sectors</small><strong>${stats.sectors}</strong><small>${stats.airports.size} airports in your roster</small></div>
+      <div class="board-metric"><small>Flying days</small><strong>${stats.mix.Flight}</strong><small>${stats.layovers} layover entries</small></div>
+      <div class="board-metric"><small>Full rest days</small><strong>${stats.mix.Rest}</strong><small>${totalDays-stats.days.length} days unrecorded</small></div>
+    </div>
+    <div class="board-panel"><h3>Flight hours by week</h3><p class="board-note">Scheduled airtime · ${boardHours(stats.minutes)} total</p><div class="board-chart" role="img" aria-label="${stats.weeks.map((n,i)=>`Days ${i*7+1} to ${Math.min(i*7+7,totalDays)}: ${boardHours(n)}`).join('; ')}">${stats.weeks.map(n=>`<div class="board-week"><span>${(n/60).toFixed(1)}h</span><div class="board-bar" style="height:${n/max*112}px"></div></div>`).join('')}</div><div class="board-week-labels">${stats.weeks.map((n,i)=>`<span>${i*7+1}–${Math.min(i*7+7,totalDays)}</span>`).join('')}</div><p class="board-note" style="margin:14px 0 0">${stats.missing?`${stats.missing} sectors have no airtime and are excluded from hour totals.`:'Uses the flight durations recorded in your roster.'} Flight time excludes ground duties and layovers.</p></div>
+    <div class="board-panel"><h3>Your month in balance</h3><p class="board-note">One primary activity per recorded day</p><div class="board-mix"><div class="board-donut" style="background:conic-gradient(${gradient})" role="img" aria-label="${Object.entries(stats.mix).map(([k,v])=>`${k}: ${v} days`).join(', ')}"><div class="board-donut-center"><strong>${stats.days.length}</strong>days</div></div><div class="board-legend">${Object.entries(stats.mix).map(([k,v],i)=>`<div><span class="board-dot" style="background:${colors[i]}"></span>${k}<b>${v}</b></div>`).join('')}</div></div><p class="board-note" style="margin:0">Flying days include any post-flight rest. Other includes report, medical and standalone layover days.</p></div>
+    <div class="board-panel"><h3>Most-flown routes</h3><p class="board-note">Both directions combined · ${routes.length} routes</p>${routes.length?routes.map(([route,count])=>`<div class="board-route"><div class="board-route-line"><b>${route}</b><span>${count} sectors</span></div><div class="board-track"><div style="width:${count/routes[0][1]*100}%"></div></div></div>`).join(''):'<p class="board-note">No flights recorded this month.</p>'}</div>
+    <div class="board-panel"><h3>Crew connections</h3><p class="board-note">${stats.crew.size} unique crew names listed across ${stats.sectors} sectors, including you where recorded.</p><button class="board-action" onclick="switchView('schedule')">View roster & crew details <i class="fa-solid fa-arrow-right"></i></button></div>
+    <p class="board-note">Hour totals use scheduled airtime, not certified block or duty hours. Partial months affect comparisons.</p>`}`;
 }
 
 function renderTradeBoard(){
@@ -3592,15 +3757,11 @@ function renderBidPeriodPills(){
   const pills = document.getElementById("bid-period-pills");
   if (!pills) return;
   const base = getBidPeriodDate();
-  // Show prev, current, next 3
   let html = "";
-  for (let i = -1; i <= 3; i++){
-    const d = new Date(base.getFullYear(), base.getMonth() + i - bidPeriodOffset + bidPeriodOffset, 1);
-    // simpler: show months around current period
-    const pd = new Date(new Date().getFullYear(), new Date().getMonth() + i, 1);
+  for (let i = -1; i <= 1; i++){
+    const pd = new Date(base.getFullYear(), base.getMonth() + i, 1);
     const lbl = pd.toLocaleDateString("en-US",{month:"short",year:"numeric"});
-    const isActive = i === 0;
-    html += `<button class="bid-period-pill${isActive?" active":""}" onclick="jumpBidPeriod(${i})">${lbl}</button>`;
+    html += `<button class="bid-period-pill${i === 0 ? " active" : ""}" aria-pressed="${i === 0}" onclick="changeBidPeriod(${i})">${lbl}</button>`;
   }
   pills.innerHTML = html;
   // update header label
@@ -3614,18 +3775,6 @@ function renderBidPeriodPills(){
   if (filtersEl) filtersEl.style.display = bidTab === "open" ? "flex" : "none";
 }
 
-let _bidPeriodPillOffset = 0;
-function jumpBidPeriod(pillIndex){
-  _bidPeriodPillOffset = pillIndex;
-  // re-render pills with selection
-  const pills = document.getElementById("bid-period-pills");
-  if (!pills) return;
-  pills.querySelectorAll(".bid-period-pill").forEach((btn,i) => {
-    btn.classList.toggle("active", i === pillIndex + 1);
-  });
-  renderBidContent();
-}
-
 function changeBidPeriod(dir){
   bidPeriodOffset += dir;
   renderBidPeriodPills();
@@ -3634,6 +3783,7 @@ function changeBidPeriod(dir){
 
 function switchBidTab(tab){
   bidTab = tab;
+  document.getElementById("bid-tab-overview").classList.toggle("active", tab === "overview");
   document.getElementById("bid-tab-open").classList.toggle("active", tab === "open");
   document.getElementById("bid-tab-mybids").classList.toggle("active", tab === "mybids");
   const filtersEl = document.getElementById("bid-filters");
@@ -3651,7 +3801,9 @@ function setBidFilter(btn, filter){
 function renderBidContent(){
   const content = document.getElementById("bid-content");
   if (!content) return;
-  if (bidTab === "open"){
+  if (bidTab === "overview"){
+    renderBoardOverview(content);
+  } else if (bidTab === "open"){
     renderOpenTime(content);
   } else {
     renderMyBids(content);
@@ -3659,7 +3811,7 @@ function renderBidContent(){
 }
 
 function renderOpenTime(container){
-  let items = OPEN_TIME;
+  let items = OPEN_TIME.filter(t => t.startDate.startsWith(boardMonthKey()));
   // filter
   if (bidFilter !== "all"){
     items = items.filter(t => {
@@ -3800,7 +3952,7 @@ function placeBid(id){
 }
 
 function renderMyBids(container){
-  const items = MY_BIDS;
+  const items = MY_BIDS.filter(t => t.startDate.startsWith(boardMonthKey()));
   if (!items.length){
     container.innerHTML = `<div class="bid-empty"><i class="fa-regular fa-clipboard"></i><p>You have no active bids yet.<br>Browse Open Time to bid on pairings.</p></div>`;
     return;
