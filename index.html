@@ -407,15 +407,15 @@ input{ font-family:inherit; }
 }
 #app-root .cal-week-row{
   display:grid !important; grid-template-columns:repeat(7,1fr) !important;
-  column-gap:3px !important; row-gap:0 !important; width:100% !important; margin-bottom:10px !important;
+  column-gap:3px !important; row-gap:0 !important; width:100% !important; margin-bottom:3px !important;
 }
 
 /* Calendar Cells */
 #app-root .cal-cell{
   position:relative !important; background:transparent !important; border:none !important;
-  box-shadow:none !important; border-radius:12px !important; padding:1px 1px 14px !important;
+  box-shadow:none !important; border-radius:12px !important; padding:5px 1px 11px !important;
   display:flex !important; flex-direction:column !important; align-items:center !important;
-  justify-content:flex-start !important; min-height:80px !important; height:80px !important;
+  justify-content:flex-start !important; min-height:70px !important; height:70px !important;
   box-sizing:border-box !important; cursor:pointer; user-select:none;
   overflow:visible !important; transform:none !important;
 }
@@ -424,12 +424,12 @@ input{ font-family:inherit; }
 /* Day Number */
 #app-root .cal-cell .cal-num{
   font-size:13.5px !important; font-weight:700 !important; color:#0F172A;
-  line-height:1.2 !important; margin-bottom:3px !important; text-align:center !important;
+  line-height:1.15 !important; margin-bottom:2px !important; text-align:center !important;
 }
 
 /* Duty Icons */
 #app-root .cal-cell .cal-ico{
-  font-size:14px !important; margin-top:2px !important; margin-bottom:4px !important;
+  font-size:14px !important; height:15px !important; margin-top:1px !important; margin-bottom:2px !important;
   display:inline-flex !important; align-items:center !important; justify-content:center !important;
   line-height:1 !important;
 }
@@ -452,22 +452,22 @@ input{ font-family:inherit; }
 /* Airport Code */
 #app-root .cal-cell .cal-code{
   font-size:9.5px !important; font-weight:700 !important; color:#475569;
-  letter-spacing:0.2px !important; line-height:1 !important; text-transform:uppercase !important;
+  letter-spacing:0.25px !important; line-height:1 !important; text-transform:uppercase !important;
   text-align:center !important; white-space:nowrap !important; overflow:hidden !important;
   text-overflow:ellipsis !important; width:100% !important; padding:0 1px !important;
-  margin-bottom:6px !important;
+  margin-bottom:2px !important;
 }
 
 /* Flight Span Underline Bar — positioned at the bottom border of the date, never covering text */
 #app-root .cal-cell .flight-span-bar{
-  position:absolute !important; left:0 !important; right:0 !important; bottom:2px !important;
+  position:absolute !important; left:0 !important; right:0 !important; bottom:1px !important;
   height:3px !important; background:#8E9AA8; border-radius:2px !important;
   pointer-events:none !important; z-index:2 !important;
 }
-#app-root .cal-cell .flight-span-bar.single{ left:6px !important; right:6px !important; border-radius:2px !important; }
-#app-root .cal-cell .flight-span-bar.start{ left:6px !important; right:-2px !important; border-radius:2px 0 0 2px !important; }
+#app-root .cal-cell .flight-span-bar.single{ left:5px !important; right:5px !important; border-radius:2px !important; }
+#app-root .cal-cell .flight-span-bar.start{ left:5px !important; right:-2px !important; border-radius:2px 0 0 2px !important; }
 #app-root .cal-cell .flight-span-bar.middle{ left:-2px !important; right:-2px !important; border-radius:0 !important; }
-#app-root .cal-cell .flight-span-bar.end{ left:-2px !important; right:6px !important; border-radius:0 2px 2px 0 !important; }
+#app-root .cal-cell .flight-span-bar.end{ left:-2px !important; right:5px !important; border-radius:0 2px 2px 0 !important; }
 
 /* Empty Cell */
 #app-root .cal-cell.empty{
@@ -477,25 +477,28 @@ input{ font-family:inherit; }
 
 /* Selected Date (Light Mode) */
 #app-root .cal-cell.selected{
-  background:#475569 !important; border:none !important; border-radius:14px !important;
-  box-shadow:0 4px 12px rgba(71,85,105,0.25) !important;
+  background:#475569 !important; border:none !important; border-radius:12px !important;
+  box-shadow:0 3px 10px rgba(71,85,105,0.25) !important;
 }
 #app-root .cal-cell.selected .cal-num{ color:#FFFFFF !important; }
 #app-root .cal-cell.selected .cal-code{ color:#FFFFFF !important; }
 #app-root .cal-cell.selected .cal-ico.plane-dark{ color:#FFFFFF !important; }
 #app-root .cal-cell.selected .cal-ico.star-pink{ color:#E0247D !important; }
 #app-root .cal-cell.selected i.door-orange{ color:#FDE68A !important; }
-#app-root .cal-cell.selected .flight-span-bar{ background:#CBD5E1 !important; bottom:4px !important; }
+#app-root .cal-cell.selected i.layover-magenta{ color:#FFAFD6 !important; }
+#app-root .cal-cell.selected .flight-span-bar{ background:#CBD5E1 !important; bottom:3px !important; }
 
 /* Unpublished Block Cell (Light Mode) */
 #app-root .cal-cell.unpublished-block{
-  background:#D8DCE3 !important; border:none !important; border-radius:12px !important;
-  height:74px !important; min-height:74px !important; max-height:74px !important;
-  display:flex !important; align-items:center !important; justify-content:center !important;
-  padding:0 !important; box-shadow:none !important; cursor:default !important;
+  background:#D1D5DB !important; border:none !important; border-radius:12px !important;
+  height:70px !important; min-height:70px !important; max-height:70px !important;
+  display:flex !important; flex-direction:column !important; align-items:center !important;
+  justify-content:flex-start !important; padding:6px 0 0 0 !important;
+  box-shadow:none !important; cursor:default !important;
 }
 #app-root .cal-cell.unpublished-block .cal-num{
-  font-size:14.5px !important; font-weight:700 !important; color:#1E293B !important; margin:0 !important;
+  font-size:13.5px !important; font-weight:700 !important; color:#1E293B !important;
+  margin:0 !important; line-height:1.15 !important;
 }
 
 /* Inline Expand Detail Slot — strictly hidden when empty so no bars appear between weeks */
@@ -668,6 +671,12 @@ input{ font-family:inherit; }
 }
 :root[data-theme="dark"] #app-root .cal-cell.selected i.door-orange{
   color:#FDE68A !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell i.layover-magenta{
+  color:#F472B6 !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell.selected i.layover-magenta{
+  color:#FFAFD6 !important;
 }
 :root[data-theme="dark"] #app-root .cal-cell .cal-training-icon rect{
   fill:#381E2B !important; stroke:#FFAFD6 !important;
@@ -3587,7 +3596,7 @@ function buildCalendarGrid(monthDate, opts){
         iconHtml = `<i class="fa-solid fa-clock reserve-teal cal-ico" aria-hidden="true"></i>`;
         codeHtml = `<span class="cal-code">${reserveLocationLabel(primary)}</span>`;
       } else if (primary.type === "layover"){
-        iconHtml = `<i class="fa-solid fa-star star-pink cal-ico" aria-hidden="true"></i>`;
+        iconHtml = `<i class="fa-solid fa-bed layover-magenta cal-ico" aria-hidden="true"></i>`;
         codeHtml = `<span class="cal-code">LVYR</span>`;
       } else if (primary.type === "leave"){
         iconHtml = `<i class="fa-solid fa-umbrella-beach leave-amber cal-ico" aria-hidden="true"></i>`;
