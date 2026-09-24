@@ -1941,6 +1941,7 @@ const DUTY_TYPES = {
   training: { icon: "fa-calendar-user",    bg: "#FCE7F3", fg: "#D12B6D", label: "Training" },
   medical:  { icon: "fa-stethoscope",      bg: "#FCE7E9", fg: "#C23B4A", label: "Class 1 Medical" },
   layover:  { icon: "fa-bed",              bg: "#F3E3EC", fg: "#B4507C", label: "Layover" },
+  leave:    { icon: "fa-umbrella-beach",   bg: "#FEF3C7", fg: "#D97706", label: "Leave" },
   off:      { icon: "fa-star",             bg: "#FCE7F3", fg: "#D12B6D", label: "Rest" }
 };
 
@@ -2197,15 +2198,11 @@ const ROSTER = {
   ],
   "2026-09-23": [{type:"off", note:"Rest"}],
   "2026-09-24": [{type:"off", note:"Rest"}],
-  "2026-09-25": [
-    {type:"flight", flightNo:"AIC421", aircraft:"B777-300ER", dep:"DEL", arr:"ATQ", depTime:"08:00", arrTime:"09:20", airtime:"01h 20m", note:"Terminal 3 → Sri Guru Ram Dass Jee International Airport", crew:{captains:["Iram Habib"],firstOfficers:["Rishabh Tripathi"],cabin:["Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Shivani Malviya","Tenzin Yangchen","Ankit Sahu"]}},
-    {type:"layover", location:"Amritsar, India", start:"10:00", end:"11:30+1", hotel:{name:"Taj Swarna, Amritsar", address:"Majitha Verka Bypass, Amritsar, Punjab 143001", phone:"+91 183 665 8000", transport:"Airline crew coach from ATQ Airport", checkIn:"10:00", checkOut:"11:30 on 26 Sep"}, note:"Domestic layover · Taj Swarna, Amritsar"}
+  "2026-09-25": [{type:"off", note:"Rest"}],
+  "2026-09-26": [{type:"reserve", reserveLocation:"airport", start:"11:00", end:"18:00", note:"ASBY · Starting Queue 53"}],
+  "2026-09-27": [
+    {type:"flight", flightNo:"AI887", aircraft:"B777-300ER", dep:"DEL", arr:"BOM", depTime:"21:00", arrTime:"23:20", airtime:"02h 20m", note:"Terminal 3 → Terminal 2 · Indira Gandhi International Airport to Chhatrapati Shivaji Maharaj International Airport", crew:{captains:["Iram Habib"],firstOfficers:["Rishabh Tripathi"],cabin:["Shreya Nair","Meera Pillai","Dimple Bordoloi","Rahul Verma","Tenzin Yangchen","Kritika Reddy","Chirag Sen","Ananya Iyer","Lunkim Haokip","Priya Sharma","Ankit Sahu","Kavita Kullupati","Sayantani Roy","Shivani Singh","Mayank Bundela"]}}
   ],
-  "2026-09-26": [
-    {type:"flight", flightNo:"AIC422", aircraft:"B777-300ER", dep:"ATQ", arr:"DEL", depTime:"13:10", arrTime:"14:15", airtime:"01h 05m", note:"Sri Guru Ram Dass Jee International Airport → Terminal 3", crew:{captains:["Iram Habib"],firstOfficers:["Rishabh Tripathi"],cabin:["Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Shivani Malviya","Tenzin Yangchen","Ankit Sahu"]}},
-    {type:"off", start:"14:15", note:"Post-flight mandatory rest"}
-  ],
-  "2026-09-27": [{type:"off", note:"Rest"}],
   "2026-09-28": [
     {type:"flight", flightNo:"AI185", aircraft:"B777-300ER", dep:"DEL", arr:"YVR", depTime:"03:55", arrTime:"07:35", airtime:"16h 10m", note:"Terminal 3 → Terminal M · Indira Gandhi International Airport to Vancouver International Airport", crew:{captains:["Anny Divya", "Shreyas Kapoor"],firstOfficers:["Rishabh Tripathi", "Amrit Kaur"],cabin:["Manu Kulkarni","Shivani Singh","Kritika Reddy","Priya Sharma","Ananya Iyer","Rahul Verma","Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Sayantani Roy","Tenzin Yangchen","Ankit Sahu","Kavita Kullupati","Meera Pillai","Chirag Sen"]}},
     {type:"layover", location:"Vancouver, BC, Canada", start:"08:35", end:"09:15+1", hotel:{name:"JW Marriott Parq Vancouver", address:"39 Smithe St, Vancouver, BC V6B 0R3, Canada", phone:"+1 604-676-0888", transport:"Airline crew coach from YVR Airport (Terminal M)", checkIn:"08:35 on 28 Sep", checkOut:"09:15 on 29 Sep"}, note:"International layover · 26h 40m · JW Marriott Parq Vancouver"}
@@ -2282,20 +2279,16 @@ const ROSTER = {
     {type:"off", start:"12:45", note:"Post-flight mandatory rest"}
   ],
   "2026-10-24": [{type:"reserve", reserveLocation:"airport", start:"06:00", end:"14:00", note:"ASBY · Airport Standby Reserve T3"}],
-  "2026-10-25": [
-    {type:"flight", flightNo:"AI173", aircraft:"B777-200LR", dep:"DEL", arr:"SFO", depTime:"04:00", arrTime:"07:00", airtime:"15h 30m", note:"Terminal 3 → International Terminal · Indira Gandhi International Airport to San Francisco International Airport", crew:{captains:["Anny Divya", "Shreyas Kapoor"],firstOfficers:["Rishabh Tripathi", "Amrit Kaur"],cabin:["Manu Kulkarni","Shivani Singh","Kritika Reddy","Priya Sharma","Ananya Iyer","Rahul Verma","Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Sayantani Roy","Tenzin Yangchen","Ankit Sahu","Kavita Kullupati","Meera Pillai","Chirag Sen"]}},
-    {type:"layover", location:"San Francisco, CA, USA", start:"08:00", end:"09:30+1", hotel:{name:"Grand Hyatt at SFO", address:"55 South Airport Blvd, San Francisco, CA 94128, United States", phone:"+1 650-452-1234", transport:"AirTrain direct connected to SFO terminals", checkIn:"08:00 on 25 Oct", checkOut:"09:30 on 27 Oct"}, note:"International layover · Grand Hyatt at SFO"}
-  ],
+  "2026-10-25": [{type:"reserve", reserveLocation:"airport", start:"06:00", end:"14:00", note:"ASBY · Starting Queue 53"}],
   "2026-10-26": [
-    {type:"layover", location:"San Francisco, CA, USA", start:"00:00", end:"23:59", hotel:{name:"Grand Hyatt at SFO", address:"55 South Airport Blvd, San Francisco, CA 94128, United States", phone:"+1 650-452-1234", transport:"AirTrain direct connected to SFO terminals", checkIn:"08:00 on 25 Oct", checkOut:"09:30 on 27 Oct"}, note:"Full layover day · Grand Hyatt at SFO"}
+    {type:"flight", flightNo:"AI887", aircraft:"B777-300ER", dep:"DEL", arr:"BOM", depTime:"21:00", arrTime:"23:20", airtime:"02h 20m", note:"Terminal 3 → Terminal 2 · Indira Gandhi International Airport to Chhatrapati Shivaji Maharaj International Airport", crew:{captains:["Anny Divya"],firstOfficers:["Rishabh Tripathi"],cabin:["Shivani Singh","Rahul Verma","Kritika Reddy","Ankit Sahu","Sayantani Roy","Mayank Bundela","Dimple Bordoloi","Lunkim Haokip","Tenzin Yangchen","Kavita Kullupati","Meera Pillai","Chirag Sen","Shreya Nair","Ananya Iyer","Priya Sharma"]}},
+    {type:"layover", location:"Mumbai, Maharashtra, India", start:"23:59", end:"18:00+1", hotel:{name:"The Lalit Mumbai", address:"Sahar Airport Rd, Navpada, Marol, Andheri East, Mumbai, Maharashtra 400059", phone:"+91 22 6699 2222", transport:"Airline crew coach from CSMIA Airport (BOM)", checkIn:"23:59 on 26 Oct", checkOut:"18:00 on 27 Oct"}, note:"Domestic layover · The Lalit Mumbai"}
   ],
   "2026-10-27": [
-    {type:"flight", flightNo:"AI174", aircraft:"B777-200LR", dep:"SFO", arr:"DEL", depTime:"10:30", arrTime:"16:15", airtime:"16h 15m", note:"International Terminal → Terminal 3 · San Francisco International Airport to Indira Gandhi International Airport", crew:{captains:["Anny Divya", "Shreyas Kapoor"],firstOfficers:["Rishabh Tripathi", "Amrit Kaur"],cabin:["Manu Kulkarni","Shivani Singh","Kritika Reddy","Priya Sharma","Ananya Iyer","Rahul Verma","Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Sayantani Roy","Tenzin Yangchen","Ankit Sahu","Kavita Kullupati","Meera Pillai","Chirag Sen"]}}
+    {type:"flight", flightNo:"AI888", aircraft:"B777-300ER", dep:"BOM", arr:"DEL", depTime:"19:10", arrTime:"21:15", airtime:"02h 05m", note:"Terminal 2 → Terminal 3 · Chhatrapati Shivaji Maharaj International Airport to Indira Gandhi International Airport", crew:{captains:["Anny Divya"],firstOfficers:["Rishabh Tripathi"],cabin:["Shivani Singh","Rahul Verma","Kritika Reddy","Ankit Sahu","Sayantani Roy","Mayank Bundela","Dimple Bordoloi","Lunkim Haokip","Tenzin Yangchen","Kavita Kullupati","Meera Pillai","Chirag Sen","Shreya Nair","Ananya Iyer","Priya Sharma"]}},
+    {type:"off", start:"21:15", note:"Post-flight mandatory rest"}
   ],
-  "2026-10-28": [
-    {type:"flight", flightNo:"AI174", aircraft:"B777-200LR", dep:"SFO", arr:"DEL", depTime:"10:30", arrTime:"16:15", airtime:"16h 15m", continuation:true, continuesFrom:"2026-10-27", note:"International Terminal → Terminal 3 · San Francisco International Airport to Indira Gandhi International Airport"},
-    {type:"off", start:"16:15", note:"Post-flight mandatory rest after ultra long-haul AI174"}
-  ],
+  "2026-10-28": [{type:"off", note:"Rest · Post-pattern mandatory rest"}],
   "2026-10-29": [{type:"off", note:"Rest · Post Ultra Long-Haul mandatory FTL rest"}],
   "2026-10-30": [{type:"training", location:"CAE Simulation Centre, Gurugram", start:"09:00", end:"17:00", note:"B777 Recency & FSTD Refresher Training"}],
   "2026-10-31": [{type:"off", note:"Rest"}]
@@ -3150,6 +3143,7 @@ function buildCalendarGrid(monthDate, opts){
       if (primary.type === "medical") codeHtml = `<span class="cal-code">${primary.start || "Medical"}</span>`;
       if (primary.type === "reserve") codeHtml = `<span class="cal-code">${reserveLocationLabel(primary)}</span>`;
       if (primary.type === "layover") codeHtml = `<span class="cal-code">LVYR</span>`;
+      if (primary.type === "leave") codeHtml = `<span class="cal-code">LV</span>`;
       if (primary.type === "off") codeHtml = `<span class="cal-code">DEL</span>`;
     }
 
