@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -339,99 +339,400 @@ input{ font-family:inherit; }
 .avatar-manage-actions{ display:flex; gap:10px; width:100%; }
 .avatar-manage-note{ font-size:12px; color:var(--ink-muted); text-align:center; }
 
-/* ---------------------------------------------------------------------
-   SCHEDULE / CALENDAR
-   --------------------------------------------------------------------- */
-.month-nav{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
-.month-nav .m-label{ font-family:var(--font-display); font-weight:600; font-size:16.5px; color:var(--ink); }
-.month-nav button{ background:var(--card); border:none; width:32px; height:32px; border-radius:9px; color:var(--ink); }
+/* ---- Screenshot UI Design Tokens & Overrides (Light & Dark Mode) ------- */
+#app-root #view-schedule{
+  background:#FFFFFF;
+}
+#app-root #view-schedule .sched-top-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 16px 8px; background:#FFFFFF; flex-shrink:0; position:relative; z-index:50;
+  transition:background .2s ease, border-color .2s ease;
+}
+#app-root .sched-month-pill-container{ position:relative; }
+#app-root .sched-month-pill{
+  display:inline-flex; align-items:center; gap:8px;
+  background:#FFFFFF; border:1px solid #E2E8F0; border-radius:9999px;
+  padding:7px 16px; font-family:var(--font-display); font-weight:600; font-size:14.5px;
+  color:#1E293B; box-shadow:0 1px 3px rgba(0,0,0,0.03); cursor:pointer;
+  transition:background .2s ease, border-color .2s ease, color .2s ease;
+}
+#app-root .sched-month-pill .caret-ico{ font-size:11px; color:#64748B; }
+#app-root .sched-month-dropdown{
+  position:absolute; top:44px; left:0; background:#FFFFFF; border:1px solid #E2E8F0;
+  border-radius:14px; box-shadow:0 8px 24px rgba(0,0,0,0.12); z-index:60; width:170px; overflow:hidden;
+}
+#app-root .smd-item{ padding:10px 14px; font-size:13.5px; font-weight:600; color:#334155; cursor:pointer; }
+#app-root .smd-item:hover{ background:#F1F5F9; }
+#app-root .sched-top-actions{ display:flex; align-items:center; gap:10px; }
+#app-root .sched-action-circle{
+  width:38px; height:38px; border-radius:12px; background:#FFFFFF;
+  border:1px solid #E2E8F0; display:flex; align-items:center; justify-content:center;
+  color:#334155; font-size:15px; box-shadow:0 1px 3px rgba(0,0,0,0.03); cursor:pointer;
+  transition:background .2s ease, border-color .2s ease, color .2s ease, transform .1s ease;
+}
+#app-root .sched-action-circle:active{ transform:scale(0.96); }
 
-.cal-weekdays{ display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); text-align:center; font-size:11px; color:var(--ink-muted); font-weight:700; margin-bottom:8px; }
-.cal-days{ display:block; width:100%; }
-.cal-week-row{
-  display:grid;
-  grid-template-columns:repeat(7,minmax(0,1fr));
-  row-gap:6px;
-  width:100%;
-  margin-bottom:6px;
+/* Schedule App Main & Sticky Weekdays Header */
+#app-root #view-schedule .app-main{
+  background:#FFFFFF; padding:0 16px 95px !important;
+  overflow-y:auto; -webkit-overflow-scrolling:touch;
 }
-.cal-week-row:last-child{ margin-bottom:0; }
-.cal-cell{
-  aspect-ratio:1/1.15; border-radius:12px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
-  min-width:0; padding-top:7px; font-size:13px; color:var(--ink); background:none; border:none; position:relative; gap:5px;
+#app-root .sched-sticky-head{
+  position:sticky; top:0; z-index:30; background:#FFFFFF;
+  padding-top:4px; padding-bottom:2px;
 }
-.cal-cell.empty{ visibility:hidden; }
-.cal-cell.today span:first-child{ font-weight:700; }
-.cal-cell.today::after{ content:""; position:absolute; top:3px; right:10px; width:4px; height:4px; border-radius:50%; background:var(--orange); }
-.cal-cell.selected{ background:var(--navy); color:#fff; }
-.cal-cell .cal-ico{ font-size:13px; color:var(--duty-icon-color, var(--ink-soft)); margin-top:1px; opacity:1; }
-.cal-cell .cal-duty-icon-image{ width:19px; height:19px; object-fit:contain; margin-top:1px; display:inline-flex; align-items:center; justify-content:center; }
-.duty-item .di-duty-icon-image{ width:22px; height:22px; object-fit:contain; display:inline-flex; align-items:center; justify-content:center; }
-.training-person-cal-icon{ width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center; }
-.duty-item .training-person-cal-icon{ width:22px; height:22px; }
-.cal-cell .flight-span-bar{
-  position:absolute; left:0; right:0; bottom:-4px; height:3px;
-  background:#8E9AA8; border-radius:0; pointer-events:none; z-index:4;
-  margin-top:4px;
+#app-root .cal-weekdays{
+  display:grid !important; grid-template-columns:repeat(7,1fr) !important;
+  text-align:center; font-size:12.5px; color:#475569; font-weight:600;
+  padding:6px 0 !important; border:none !important; margin:0 !important;
 }
-#app-root .cal-cell.flight-span-cell{ overflow:visible !important; }
-.cal-cell .flight-span-bar.single{ left:4px; right:4px; border-radius:3px; }
-.cal-cell .flight-span-bar.start{ left:4px; right:-2px; border-radius:3px 0 0 3px; }
-.cal-cell .flight-span-bar.middle{ left:-2px; right:-2px; border-radius:0; }
-.cal-cell .flight-span-bar.end{ left:-2px; right:4px; border-radius:0 3px 3px 0; }
-.cal-cell.selected .flight-span-bar{ background:#CBD5E1; }
-:root[data-theme="dark"] .cal-cell .flight-span-bar{ background:#64748B; }
-:root[data-theme="dark"] .cal-cell.selected .flight-span-bar{ background:#94A3B8; }
-.cal-cell.selected .cal-ico{ color:#fff !important; }
-.cal-cell.selected i.fa-star{ color:#fff !important; }
-.cal-cell.selected .training-person-cal-icon svg rect{ fill:rgba(255,255,255,.3); stroke:#fff; }
-.cal-cell.selected .training-person-cal-icon svg path{ stroke:#fff; fill:#fff; }
-.cal-cell.selected .training-person-cal-icon svg circle{ fill:#fff; stroke:#fff; }
-:root[data-theme="dark"] .cal-cell i.fa-star{ color:#D12B6D; }
-:root[data-theme="dark"] .cal-cell.selected i.fa-star{ color:#fff !important; }
-.cal-cell .cal-code{
-  display:block; width:100%; padding:0 2px; overflow:hidden; text-overflow:ellipsis;
-  white-space:nowrap; font-size:8.5px; line-height:1.15; font-weight:600; color:var(--ink-muted);
+
+/* Month Heading & Badge */
+#app-root .cal-month-heading-row{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 2px 10px;
 }
-.cal-cell.selected .cal-code{ color:#fff; }
-.week-detail-slot.hidden{ display:none !important; }
-.week-detail-slot:not(.hidden){ display:block !important; }
-.week-detail-slot{ grid-column:1 / -1; }
-.day-detail.inline{
-  display:block !important;
-  width:100%;
-  margin:4px 0 14px;
-  padding:12px 0 0;
-  box-sizing:border-box;
-  background:var(--bg);
-  border-top:1px solid var(--line);
+#app-root .cal-month-heading{
+  display:block !important; font-family:var(--font-display); font-weight:700;
+  font-size:17px; color:#0F172A; margin:0 !important;
 }
-.day-detail.inline .day-detail-head{
-  padding:0 2px 10px;
+#app-root .unpublished-badge{
+  display:inline-flex; align-items:center; gap:6px; background:#F59E0B; color:#000000;
+  font-size:11.5px; font-weight:700; padding:5px 12px; border-radius:16px;
 }
-.day-detail.inline .duty-wrap{
-  margin:0;
+
+/* Calendar Days and Week Rows */
+#app-root .cal-days{
+  display:flex !important; flex-direction:column !important; width:100% !important;
+}
+#app-root .cal-week-row{
+  display:grid !important; grid-template-columns:repeat(7,1fr) !important;
+  column-gap:3px !important; row-gap:0 !important; width:100% !important; margin-bottom:10px !important;
+}
+
+/* Calendar Cells */
+#app-root .cal-cell{
+  position:relative !important; background:transparent !important; border:none !important;
+  box-shadow:none !important; border-radius:12px !important; padding:1px 1px 14px !important;
+  display:flex !important; flex-direction:column !important; align-items:center !important;
+  justify-content:flex-start !important; min-height:80px !important; height:80px !important;
+  box-sizing:border-box !important; cursor:pointer; user-select:none;
+  overflow:visible !important; transform:none !important;
+}
+#app-root .cal-cell:hover{ background:rgba(0,0,0,0.02) !important; }
+
+/* Day Number */
+#app-root .cal-cell .cal-num{
+  font-size:13.5px !important; font-weight:700 !important; color:#0F172A;
+  line-height:1.2 !important; margin-bottom:3px !important; text-align:center !important;
+}
+
+/* Duty Icons */
+#app-root .cal-cell .cal-ico{
+  font-size:14px !important; margin-top:2px !important; margin-bottom:4px !important;
+  display:inline-flex !important; align-items:center !important; justify-content:center !important;
+  line-height:1 !important;
+}
+#app-root .cal-cell i.star-pink{ color:#E0247D !important; }
+#app-root .cal-cell i.plane-dark{ color:#1E293B; }
+#app-root .cal-cell i.door-orange{ color:#E8983F !important; }
+#app-root .cal-cell i.cal-pink{ color:#E0247D !important; }
+#app-root .cal-cell i.reserve-teal{ color:#34A79C !important; }
+#app-root .cal-cell i.medical-red{ color:#C23B4A !important; }
+#app-root .cal-cell i.layover-magenta{ color:#B4507C !important; }
+#app-root .cal-cell i.leave-amber{ color:#D97706 !important; }
+#app-root .cal-cell .cal-training-icon{
+  width:14px !important; height:14px !important;
+  display:inline-flex !important; align-items:center !important; justify-content:center !important;
+}
+#app-root .cal-cell .cal-training-icon svg{
+  width:14px !important; height:14px !important; display:block !important;
+}
+
+/* Airport Code */
+#app-root .cal-cell .cal-code{
+  font-size:9.5px !important; font-weight:700 !important; color:#475569;
+  letter-spacing:0.2px !important; line-height:1 !important; text-transform:uppercase !important;
+  text-align:center !important; white-space:nowrap !important; overflow:hidden !important;
+  text-overflow:ellipsis !important; width:100% !important; padding:0 1px !important;
+  margin-bottom:6px !important;
+}
+
+/* Flight Span Underline Bar — positioned at the bottom border of the date, never covering text */
+#app-root .cal-cell .flight-span-bar{
+  position:absolute !important; left:0 !important; right:0 !important; bottom:2px !important;
+  height:3px !important; background:#8E9AA8; border-radius:2px !important;
+  pointer-events:none !important; z-index:2 !important;
+}
+#app-root .cal-cell .flight-span-bar.single{ left:6px !important; right:6px !important; border-radius:2px !important; }
+#app-root .cal-cell .flight-span-bar.start{ left:6px !important; right:-2px !important; border-radius:2px 0 0 2px !important; }
+#app-root .cal-cell .flight-span-bar.middle{ left:-2px !important; right:-2px !important; border-radius:0 !important; }
+#app-root .cal-cell .flight-span-bar.end{ left:-2px !important; right:6px !important; border-radius:0 2px 2px 0 !important; }
+
+/* Empty Cell */
+#app-root .cal-cell.empty{
+  visibility:hidden !important; pointer-events:none !important;
+  background:transparent !important; border:none !important; box-shadow:none !important;
+}
+
+/* Selected Date (Light Mode) */
+#app-root .cal-cell.selected{
+  background:#475569 !important; border:none !important; border-radius:14px !important;
+  box-shadow:0 4px 12px rgba(71,85,105,0.25) !important;
+}
+#app-root .cal-cell.selected .cal-num{ color:#FFFFFF !important; }
+#app-root .cal-cell.selected .cal-code{ color:#FFFFFF !important; }
+#app-root .cal-cell.selected .cal-ico.plane-dark{ color:#FFFFFF !important; }
+#app-root .cal-cell.selected .cal-ico.star-pink{ color:#E0247D !important; }
+#app-root .cal-cell.selected .flight-span-bar{ background:#CBD5E1 !important; bottom:4px !important; }
+
+/* Unpublished Block Cell (Light Mode) */
+#app-root .cal-cell.unpublished-block{
+  background:#D8DCE3 !important; border:none !important; border-radius:12px !important;
+  height:74px !important; min-height:74px !important; max-height:74px !important;
+  display:flex !important; align-items:center !important; justify-content:center !important;
+  padding:0 !important; box-shadow:none !important; cursor:default !important;
+}
+#app-root .cal-cell.unpublished-block .cal-num{
+  font-size:14.5px !important; font-weight:700 !important; color:#1E293B !important; margin:0 !important;
+}
+
+/* Inline Expand Detail Slot — strictly hidden when empty so no bars appear between weeks */
+#app-root .week-detail-slot.hidden,
+#app-root .day-detail.inline.hidden{
+  display:none !important; padding:0 !important; margin:0 !important;
+  border:none !important; height:0 !important; min-height:0 !important; overflow:hidden !important;
+}
+#app-root .week-detail-slot:not(.hidden),
+#app-root .day-detail.inline:not(.hidden){
+  display:block !important; grid-column:1 / -1; width:100%; margin:6px 0 14px;
+  padding:14px; box-sizing:border-box; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:16px;
+}
+#app-root .day-detail.inline .duty-item{
+  border-radius:8px; background:#FFFFFF; margin-bottom:8px; padding:12px; border:1px solid #E2E8F0;
+}
+
+/* Floating Today Button */
+#app-root .sched-floating-today{
+  position:absolute; bottom:84px; left:18px; z-index:95;
+  background:#FFFFFF; color:#1E293B; font-family:var(--font-display);
+  font-weight:700; font-size:14px; padding:9px 22px; border-radius:9999px;
+  border:1px solid #E2E8F0; box-shadow:0 4px 14px rgba(0,0,0,0.12); cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease, background .2s ease, color .2s ease;
+}
+#app-root .sched-floating-today:active{ transform:scale(.95); }
+
+/* Bottom Navigation Bar */
+#app-root .bottom-nav{
+  position:absolute; bottom:0; left:0; right:0; height:68px;
+  background:#FFFFFF; border-top:1px solid #E2E8F0; display:flex;
+  align-items:center; justify-content:space-around; padding:0 4px; z-index:100;
+  box-shadow:0 -2px 10px rgba(0,0,0,0.03);
+  transition:background .2s ease, border-color .2s ease;
+}
+#app-root .nav-btn{
+  flex:1; display:flex; flex-direction:column; align-items:center;
+  justify-content:center; gap:3px; background:none; border:none;
+  color:#64748B; padding:4px 0; cursor:pointer;
+}
+#app-root .nav-btn .nav-icon-wrap{
+  width:56px; height:32px; border-radius:16px; display:flex;
+  align-items:center; justify-content:center; font-size:17px;
+  transition:background .15s ease, color .15s ease;
+}
+#app-root .nav-btn.active .nav-icon-wrap{ background:#E8EEFB; color:#2563EB; }
+#app-root .nav-btn.active span{ color:#2563EB; font-weight:700; }
+#app-root .nav-btn span{ font-size:11px; font-weight:500; color:#64748B; }
+
+#app-root .nav-initials{
+  width:26px; height:26px; border-radius:50%; background:#CBD5E1;
+  color:#475569; font-size:11px; font-weight:700; display:flex;
+  align-items:center; justify-content:center;
+}
+#app-root .nav-btn.active .nav-initials{ background:#2563EB; color:#FFFFFF; }
+
+/* More Menu Sheet & Settings Overlay */
+.more-menu-overlay{
+  position:absolute; top:0; left:0; right:0; bottom:0;
+  background:rgba(0,0,0,0.4); z-index:200; display:flex;
+  align-items:flex-end; animation:fade-in .15s ease;
+}
+.more-menu-sheet, .settings-card{
+  width:100%; background:#FFFFFF; border-radius:24px 24px 0 0;
+  padding:24px 20px 32px; animation:slide-up .2s ease;
+}
+@keyframes slide-up{ from{transform:translateY(100%);} to{transform:translateY(0);} }
+
+.more-menu-title{ font-family:var(--font-display); font-weight:700; font-size:17px; color:#1E293B; margin-bottom:18px; }
+.more-menu-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.more-menu-grid button{
+  background:#F8FAFC; border:1px solid #E2E8F0; border-radius:16px;
+  padding:14px 8px; display:flex; flex-direction:column; align-items:center; gap:8px; cursor:pointer;
+}
+.more-menu-grid button .mm-ico{ width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:18px; }
+.more-menu-grid button span{ font-size:12px; font-weight:600; color:#334155; }
+
+.settings-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+.settings-head h3{ font-family:var(--font-display); font-weight:700; font-size:18px; margin:0; color:#1E293B; }
+.settings-head button{ background:none; border:none; font-size:18px; color:#64748B; cursor:pointer; }
+.settings-row{ display:flex; justify-content:space-between; align-items:center; }
+.st-title{ font-weight:600; font-size:14px; color:#1E293B; }
+.st-sub{ font-size:12px; color:#64748B; margin-top:2px; }
+
+/* ==========================================================================
+   SCHEDULE & BOTTOM NAV — DARK MODE OVERRIDES
+   ========================================================================== */
+:root[data-theme="dark"] #app-root #view-schedule{
+  background:var(--bg) !important;
+}
+:root[data-theme="dark"] #app-root #view-schedule .sched-top-header{
+  background:var(--bg) !important;
   border-bottom:1px solid var(--line);
 }
-.day-detail.inline .duty-wrap:last-child{ border-bottom:none; }
-.day-detail.inline .duty-item{
-  border-radius:0;
-  background:transparent;
-  padding:13px 4px 13px 7px;
+:root[data-theme="dark"] #app-root .sched-month-pill{
+  background:var(--surface) !important;
+  border-color:var(--line) !important;
+  color:var(--ink) !important;
+  box-shadow:0 2px 6px rgba(0,0,0,0.3) !important;
 }
-.day-detail.inline .duty-expand{ border-radius:0; }
-.day-detail.inline .empty-state{
-  margin:0 0 8px;
+:root[data-theme="dark"] #app-root .sched-month-pill .caret-ico{
+  color:var(--ink-muted) !important;
 }
-
-/* ---- Continuous vertical month scroll: months stack top-to-bottom inside
-   the normal page scroll; sched-sticky-head pins nav/legend/weekdays above
-   it so only the day grids scroll underneath. ---- */
-.sched-sticky-head{ position:sticky; top:0; z-index:4; background:var(--bg); padding-bottom:2px; }
-.cal-vscroll{ width:100%; max-width:100%; overflow-x:hidden; }
-.cal-month-block{ margin-bottom:26px; }
-.cal-month-block:last-child{ margin-bottom:4px; }
-.cal-month-heading{ display:none; font-family:var(--font-display); font-weight:600; font-size:12.5px; color:var(--ink-muted); text-align:center; margin:2px 0 10px; letter-spacing:.2px; }
+:root[data-theme="dark"] #app-root .sched-month-dropdown{
+  background:var(--surface) !important;
+  border-color:var(--line) !important;
+  box-shadow:0 8px 24px rgba(0,0,0,0.5) !important;
+}
+:root[data-theme="dark"] #app-root .smd-item{
+  color:var(--ink) !important;
+}
+:root[data-theme="dark"] #app-root .smd-item:hover{
+  background:var(--card) !important;
+}
+:root[data-theme="dark"] #app-root .sched-action-circle{
+  background:var(--surface) !important;
+  border-color:var(--line) !important;
+  color:var(--ink) !important;
+  box-shadow:0 2px 6px rgba(0,0,0,0.3) !important;
+}
+:root[data-theme="dark"] #app-root #view-schedule .app-main{
+  background:var(--bg) !important;
+}
+:root[data-theme="dark"] #app-root .sched-sticky-head{
+  background:var(--bg) !important;
+}
+:root[data-theme="dark"] #app-root .cal-weekdays{
+  color:var(--ink-muted) !important;
+}
+:root[data-theme="dark"] #app-root .cal-month-heading{
+  color:var(--ink) !important;
+}
+:root[data-theme="dark"] #app-root .unpublished-badge{
+  background:#B45309 !important;
+  color:#FEF3C7 !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell:hover{
+  background:rgba(255,255,255,0.06) !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell .cal-num{
+  color:var(--ink) !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell .cal-code{
+  color:var(--ink-muted) !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell i.plane-dark{
+  color:var(--ink) !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell .flight-span-bar{
+  background:#4A5B6E !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell.selected{
+  background:#2563EB !important;
+  box-shadow:0 4px 14px rgba(37,99,235,0.45) !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell.selected .cal-num{
+  color:#FFFFFF !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell.selected .cal-code{
+  color:#FFFFFF !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell.selected .cal-ico.plane-dark{
+  color:#FFFFFF !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell.selected .cal-ico.star-pink{
+  color:#FFAFD6 !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell .cal-training-icon rect{
+  fill:#381E2B !important; stroke:#FFAFD6 !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell .cal-training-icon path,
+:root[data-theme="dark"] #app-root .cal-cell .cal-training-icon line,
+:root[data-theme="dark"] #app-root .cal-cell .cal-training-icon circle{
+  stroke:#FFAFD6 !important; fill:#FFAFD6 !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell.selected .cal-training-icon rect{
+  fill:rgba(255,255,255,0.2) !important; stroke:#FFAFD6 !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell.selected .flight-span-bar{
+  background:#93C5FD !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell.unpublished-block{
+  background:var(--card) !important;
+  border:1px solid var(--line) !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell.unpublished-block .cal-num{
+  color:var(--ink-muted) !important;
+}
+:root[data-theme="dark"] #app-root .day-detail.inline:not(.hidden){
+  background:var(--surface) !important;
+  border-color:var(--line) !important;
+}
+:root[data-theme="dark"] #app-root .day-detail.inline .duty-item{
+  background:var(--card) !important;
+  border-color:var(--line) !important;
+}
+:root[data-theme="dark"] #app-root .sched-floating-today{
+  background:var(--surface) !important;
+  color:var(--ink) !important;
+  border-color:var(--line) !important;
+  box-shadow:0 4px 16px rgba(0,0,0,0.5) !important;
+}
+:root[data-theme="dark"] #app-root .bottom-nav{
+  background:var(--surface) !important;
+  border-top-color:var(--line) !important;
+  box-shadow:0 -2px 10px rgba(0,0,0,0.25) !important;
+}
+:root[data-theme="dark"] #app-root .nav-btn{
+  color:var(--ink-muted) !important;
+}
+:root[data-theme="dark"] #app-root .nav-btn.active .nav-icon-wrap{
+  background:rgba(37,99,235,0.25) !important;
+  color:#60A5FA !important;
+}
+:root[data-theme="dark"] #app-root .nav-btn.active span{
+  color:#60A5FA !important;
+}
+:root[data-theme="dark"] #app-root .nav-initials{
+  background:var(--card) !important;
+  color:var(--ink-soft) !important;
+}
+:root[data-theme="dark"] #app-root .nav-btn.active .nav-initials{
+  background:#2563EB !important;
+  color:#FFFFFF !important;
+}
+:root[data-theme="dark"] .more-menu-sheet{
+  background:var(--surface) !important;
+}
+:root[data-theme="dark"] .more-menu-title{
+  color:var(--ink) !important;
+}
+:root[data-theme="dark"] .more-menu-grid button{
+  background:var(--card) !important;
+  border-color:var(--line) !important;
+}
+:root[data-theme="dark"] .more-menu-grid button span{
+  color:var(--ink) !important;
+}
 
 /* ---- roster stats strip (CAE-style month-at-a-glance) ---- */
 .roster-stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:14px; }
@@ -1325,7 +1626,7 @@ body{ background:var(--bg-outer); }
 
 /* Calendar cell tap */
 #app-root .cal-cell{
-  transition:background .12s ease, transform .08s ease; overflow:hidden;
+  transition:background .12s ease, transform .08s ease; overflow:visible;
 }
 #app-root .cal-cell:not(.empty):not(.selected):active{
   transform:scale(.88); background:#EEF2FF;
@@ -1529,41 +1830,47 @@ body{ background:var(--bg-outer); }
 
     <!-- ---------- SCHEDULE ---------- -->
     <section id="view-schedule" class="view hidden">
-      <div class="subpage-head centered">
-        <button type="button" aria-label="Back to Home" onclick="switchView('dashboard')"><i class="fa-solid fa-arrow-left"></i></button>
-        <div class="sp-title-block"><h2 id="sched-header-label">August 2026</h2></div>
-        <div class="schedule-actions">
-          <button type="button" class="sp-more" aria-label="Schedule options" aria-haspopup="true" aria-expanded="false" onclick="toggleScheduleMenu(event)"><i class="fa-solid fa-ellipsis-vertical"></i></button>
-          <div class="schedule-menu hidden" id="schedule-menu">
-            <button type="button" onclick="printActiveCalendar(true)"><i class="fa-solid fa-file-pdf"></i> Export as PDF</button>
-            <button type="button" onclick="printActiveCalendar(false)"><i class="fa-solid fa-print"></i> Print calendar</button>
+      <div class="sched-top-header">
+        <div class="sched-month-pill-container">
+          <button type="button" class="sched-month-pill" onclick="toggleScheduleMonthDropdown(event)">
+            <span id="sched-month-pill-text">September 2026</span>
+            <i class="fa-solid fa-sort caret-ico"></i>
+          </button>
+          <div class="sched-month-dropdown hidden" id="sched-month-dropdown">
+            <div class="smd-item" onclick="selectScheduleMonth(2026, 7)">August 2026</div>
+            <div class="smd-item" onclick="selectScheduleMonth(2026, 8)">September 2026</div>
+            <div class="smd-item" onclick="selectScheduleMonth(2026, 9)">October 2026</div>
+            <div class="smd-item" onclick="selectScheduleMonth(2026, 10)">November 2026</div>
           </div>
+        </div>
+        <div class="sched-top-actions">
+          <button type="button" class="sched-action-circle" title="Share / PDF Export" onclick="printActiveCalendar(true)">
+            <i class="fa-solid fa-arrow-up-from-bracket"></i>
+          </button>
+          <button type="button" class="sched-action-circle" title="Toggle List / Grid View" onclick="toggleScheduleViewMode()">
+            <i class="fa-solid fa-list-ul"></i>
+          </button>
         </div>
       </div>
       <div class="app-main">
-        <div class="roster-stats" id="sched-stats"><!-- rendered by JS --></div>
-
-        <div class="sched-toolbar">
-          <div class="view-toggle" id="sched-view-toggle">
-            <button class="vt-btn active" data-mode="month" onclick="setScheduleMode('month')"><i class="fa-solid fa-calendar-days"></i> Month</button>
-            <button class="vt-btn" data-mode="list" onclick="setScheduleMode('list')"><i class="fa-solid fa-list"></i> List</button>
-          </div>
-          <button class="today-btn hidden" id="sched-today-btn" onclick="jumpToToday()">Today</button>
-        </div>
+        <div class="roster-stats hidden" id="sched-stats"><!-- rendered by JS --></div>
 
         <!-- Month (calendar) view — continuous vertical scroll across months -->
         <div id="sched-month-view">
           <div class="sched-sticky-head">
-            <div class="legend-row" id="sched-legend"><!-- rendered by JS --></div>
-            <div class="cal-weekdays"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+            <div class="legend-row hidden" id="sched-legend"><!-- rendered by JS --></div>
+            <div class="cal-weekdays"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
           </div>
           <div class="cal-vscroll" id="sched-cal-scroll"><!-- month blocks rendered by JS --></div>
-
         </div>
 
         <!-- List (agenda) view — inspired by CAE Crew Roster's roster list -->
         <div id="sched-list-view" class="hidden"><!-- rendered by JS --></div>
       </div>
+
+      <button type="button" class="sched-floating-today" id="sched-floating-today" onclick="jumpToToday()">
+        Today
+      </button>
     </section>
 
     <!-- ---------- DUTY SWAPS ---------- -->
@@ -1835,12 +2142,56 @@ body{ background:var(--bg-outer); }
 
     <!-- ---------- BOTTOM NAV ---------- -->
     <nav class="bottom-nav" id="bottom-nav">
-      <button class="nav-btn" data-nav="dashboard" onclick="switchView('dashboard')"><i class="fa-solid fa-house"></i><span>Home</span></button>
-      <button class="nav-btn" data-nav="schedule" onclick="switchView('schedule')"><i class="fa-regular fa-calendar-days"></i><span>Schedule</span></button>
-      <button class="nav-btn" data-nav="swaps" onclick="switchView('swaps')"><i class="fa-solid fa-people-arrows"></i><span>Swaps</span></button>
-      <button class="nav-btn" data-nav="board" onclick="switchView('board')"><i class="fa-solid fa-earth-asia"></i><span>Board</span></button>
-      <button class="nav-btn" data-nav="chat" onclick="switchView('chat')"><i class="fa-regular fa-comments"></i><span>Chat</span></button>
+      <button class="nav-btn" data-nav="dashboard" onclick="switchView('dashboard')">
+        <div class="nav-icon-wrap"><i class="fa-solid fa-house"></i></div>
+        <span>Home</span>
+      </button>
+      <button class="nav-btn" data-nav="schedule" onclick="switchView('schedule')">
+        <div class="nav-icon-wrap"><i class="fa-solid fa-calendar-days"></i></div>
+        <span>Schedule</span>
+      </button>
+      <button class="nav-btn" data-nav="profile" onclick="switchView('profile')">
+        <div class="nav-icon-wrap"><span class="nav-initials">RT</span></div>
+        <span>Profile</span>
+      </button>
+      <button class="nav-btn" data-nav="settings" onclick="openSettings()">
+        <div class="nav-icon-wrap"><i class="fa-solid fa-gear"></i></div>
+        <span>Settings</span>
+      </button>
+      <button class="nav-btn" data-nav="more" onclick="toggleMoreMenu(event)">
+        <div class="nav-icon-wrap"><i class="fa-solid fa-ellipsis"></i></div>
+        <span>More</span>
+      </button>
     </nav>
+  </div>
+
+  <!-- More Features Sheet Overlay -->
+  <div class="more-menu-overlay hidden" id="more-menu-overlay" onclick="closeMoreMenu()">
+    <div class="more-menu-sheet" onclick="event.stopPropagation()">
+      <div class="more-menu-title">More Features</div>
+      <div class="more-menu-grid">
+        <button onclick="switchViewFromMore('swaps')">
+          <div class="mm-ico" style="background:#FDE8E8; color:#E53E3E;"><i class="fa-solid fa-people-arrows"></i></div>
+          <span>Duty Swaps</span>
+        </button>
+        <button onclick="switchViewFromMore('board_open')">
+          <div class="mm-ico" style="background:#EBF8FF; color:#3182CE;"><i class="fa-solid fa-plane-departure"></i></div>
+          <span>Open Time</span>
+        </button>
+        <button onclick="switchViewFromMore('board_mybids')">
+          <div class="mm-ico" style="background:#FEFCBF; color:#D69E2E;"><i class="fa-solid fa-gavel"></i></div>
+          <span>My Bids</span>
+        </button>
+        <button onclick="switchViewFromMore('chat')">
+          <div class="mm-ico" style="background:#E6FFFA; color:#319795;"><i class="fa-solid fa-comments"></i></div>
+          <span>Crew Chat</span>
+        </button>
+        <button onclick="switchViewFromMore('board')">
+          <div class="mm-ico" style="background:#EDF2F7; color:#4A5568;"><i class="fa-solid fa-chart-pie"></i></div>
+          <span>Logbook / FTL</span>
+        </button>
+      </div>
+    </div>
   </div>
 
   <div id="toast"><i class="fa-solid fa-circle-check"></i><span id="toast-text"></span></div>
@@ -2199,10 +2550,8 @@ const ROSTER = {
   "2026-09-23": [{type:"off", note:"Rest"}],
   "2026-09-24": [{type:"off", note:"Rest"}],
   "2026-09-25": [{type:"off", note:"Rest"}],
-  "2026-09-26": [{type:"reserve", reserveLocation:"airport", start:"11:00", end:"18:00", note:"ASBY · Starting Queue 53"}],
-  "2026-09-27": [
-    {type:"flight", flightNo:"AI887", aircraft:"B777-300ER", dep:"DEL", arr:"BOM", depTime:"21:00", arrTime:"23:20", airtime:"02h 20m", note:"Terminal 3 → Terminal 2 · Indira Gandhi International Airport to Chhatrapati Shivaji Maharaj International Airport", crew:{captains:["Iram Habib"],firstOfficers:["Rishabh Tripathi"],cabin:["Shreya Nair","Meera Pillai","Dimple Bordoloi","Rahul Verma","Tenzin Yangchen","Kritika Reddy","Chirag Sen","Ananya Iyer","Lunkim Haokip","Priya Sharma","Ankit Sahu","Kavita Kullupati","Sayantani Roy","Shivani Singh","Mayank Bundela"]}}
-  ],
+  "2026-09-26": [{type:"off", note:"Rest"}],
+  "2026-09-27": [{type:"off", note:"Rest"}],
   "2026-09-28": [
     {type:"flight", flightNo:"AI185", aircraft:"B777-300ER", dep:"DEL", arr:"YVR", depTime:"03:55", arrTime:"07:35", airtime:"16h 10m", note:"Terminal 3 → Terminal M · Indira Gandhi International Airport to Vancouver International Airport", crew:{captains:["Anny Divya", "Shreyas Kapoor"],firstOfficers:["Rishabh Tripathi", "Amrit Kaur"],cabin:["Manu Kulkarni","Shivani Singh","Kritika Reddy","Priya Sharma","Ananya Iyer","Rahul Verma","Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Sayantani Roy","Tenzin Yangchen","Ankit Sahu","Kavita Kullupati","Meera Pillai","Chirag Sen"]}},
     {type:"layover", location:"Vancouver, BC, Canada", start:"08:35", end:"09:15+1", hotel:{name:"JW Marriott Parq Vancouver", address:"39 Smithe St, Vancouver, BC V6B 0R3, Canada", phone:"+1 604-676-0888", transport:"Airline crew coach from YVR Airport (Terminal M)", checkIn:"08:35 on 28 Sep", checkOut:"09:15 on 29 Sep"}, note:"International layover · 26h 40m · JW Marriott Parq Vancouver"}
@@ -2768,8 +3117,8 @@ function printActiveCalendar(exportAsPdf){
    THEME — dark / light mode (toggled from Settings)
    ========================================================================== */
 function getSavedTheme(){
-  try{ return localStorage.getItem("skylink-theme") || "light"; }
-  catch(e){ return "light"; }
+  try{ return localStorage.getItem("skylink-theme") || "dark"; }
+  catch(e){ return "dark"; }
 }
 function applyTheme(mode){
   if (mode === "dark") document.documentElement.setAttribute("data-theme", "dark");
@@ -2860,10 +3209,26 @@ init();
    ========================================================================== */
 function switchView(name){
   if (name !== "schedule") closeScheduleMenu();
-  document.querySelectorAll(".view").forEach(v => v.classList.add("hidden"));
-  document.getElementById("view-" + name).classList.remove("hidden");
+  closeMoreMenu();
+  closeScheduleMonthDropdown();
 
-  document.querySelectorAll(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.nav === name));
+  document.querySelectorAll(".view").forEach(v => v.classList.add("hidden"));
+  const targetView = document.getElementById("view-" + name);
+  if (targetView) targetView.classList.remove("hidden");
+
+  const navMap = {
+    dashboard: "dashboard",
+    schedule: "schedule",
+    profile: "profile",
+    board: "board",
+    settings: "settings",
+    swaps: "more",
+    chat: "more",
+    "chat-inbox": "more",
+    documents: "more"
+  };
+  const activeNav = navMap[name] || "more";
+  document.querySelectorAll(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.nav === activeNav));
   document.getElementById("bottom-nav").classList.toggle("hidden", name === "swap-request" || name === "chat-inbox");
 
   if (name === "schedule") renderScheduleCalendar();
@@ -2873,6 +3238,65 @@ function switchView(name){
   if (name === "chat-inbox") renderChatInbox();
   if (name === "documents") renderDocuments();
   if (name === "dashboard") renderDashboard();
+  if (name === "profile") updateAvatarTargetImages();
+}
+
+function toggleMoreMenu(event){
+  if (event) event.stopPropagation();
+  const overlay = document.getElementById("more-menu-overlay");
+  if (overlay) overlay.classList.toggle("hidden");
+}
+
+function closeMoreMenu(){
+  const overlay = document.getElementById("more-menu-overlay");
+  if (overlay) overlay.classList.add("hidden");
+}
+
+function switchViewFromMore(viewName){
+  closeMoreMenu();
+  if (viewName === 'board_open'){
+    switchView('board');
+    switchBidTab('open');
+  } else if (viewName === 'board_mybids'){
+    switchView('board');
+    switchBidTab('mybids');
+  } else {
+    switchView(viewName);
+  }
+}
+
+function openSettingsModal(){
+  const modal = document.getElementById("settings-modal");
+  if (modal) modal.classList.remove("hidden");
+}
+
+function closeSettingsModal(){
+  const modal = document.getElementById("settings-modal");
+  if (modal) modal.classList.add("hidden");
+}
+
+function toggleScheduleMonthDropdown(event){
+  if (event) event.stopPropagation();
+  const dd = document.getElementById("sched-month-dropdown");
+  if (dd) dd.classList.toggle("hidden");
+}
+
+function closeScheduleMonthDropdown(){
+  const dd = document.getElementById("sched-month-dropdown");
+  if (dd) dd.classList.add("hidden");
+}
+
+function selectScheduleMonth(year, month){
+  scheduleViewMonth = new Date(year, month, 1);
+  closeScheduleMonthDropdown();
+  renderScheduleCalendar();
+}
+
+function toggleScheduleViewMode(){
+  scheduleMode = (scheduleMode === "month") ? "list" : "month";
+  document.getElementById("sched-month-view").classList.toggle("hidden", scheduleMode === "list");
+  document.getElementById("sched-list-view").classList.toggle("hidden", scheduleMode === "month");
+  if (scheduleMode === "list") renderScheduleAgenda();
 }
 
 /* ==========================================================================
@@ -3131,31 +3555,49 @@ function buildCalendarGrid(monthDate, opts){
     if (primary){
       const meta = dutyMeta(primary.type);
       dutyMeaning = meta.label;
-      iconHtml = scheduleImageIcon(primary, "cal-duty-icon-image") ||
-        `<i class="fa-solid ${meta.icon} cal-ico" style="--duty-icon-color:${meta.fg}" aria-hidden="true"></i>`;
+
       if (primary.type === "flight"){
         const lastFlight = [...events].reverse().find(e => e.type === "flight") || primary;
+        iconHtml = `<i class="fa-solid fa-plane plane-dark cal-ico" aria-hidden="true"></i>`;
         codeHtml = `<span class="cal-code">${lastFlight.arr || ""}</span>`;
         if (events.some(event => event.type === "off")) dutyMeaning = `${meta.label} to ${lastFlight.arr || "destination"} and Rest`;
+      } else if (primary.type === "report"){
+        iconHtml = `<i class="fa-solid fa-right-from-bracket door-orange cal-ico" aria-hidden="true"></i>`;
+        codeHtml = `<span class="cal-code">${primary.start || ""}</span>`;
+      } else if (primary.type === "training"){
+        iconHtml = `<span class="cal-ico cal-training-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="3.5" width="13.5" height="13.5" rx="2.5" fill="#FCE7F3" stroke="#E0247D" stroke-width="1.6"/><path d="M2 8H15.5" stroke="#E0247D" stroke-width="1.5"/><path d="M5.5 1.8V4.5M11.5 1.8V4.5" stroke="#E0247D" stroke-width="1.6" stroke-linecap="round"/><circle cx="5.5" cy="11.2" r="0.8" fill="#E0247D"/><circle cx="8.5" cy="11.2" r="0.8" fill="#E0247D"/><circle cx="5.5" cy="14" r="0.8" fill="#E0247D"/><circle cx="17" cy="11.5" r="3.2" fill="#E0247D" stroke="#FFFFFF" stroke-width="1.5"/><path d="M12 20.5C12 17.5 14.2 16 17 16C19.8 16 22 17.5 22 20.5" fill="#E0247D" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/></svg></span>`;
+        codeHtml = `<span class="cal-code">DEL</span>`;
+      } else if (primary.type === "reserve"){
+        iconHtml = `<i class="fa-solid fa-clock reserve-teal cal-ico" aria-hidden="true"></i>`;
+        codeHtml = `<span class="cal-code">${reserveLocationLabel(primary)}</span>`;
+      } else if (primary.type === "layover"){
+        iconHtml = `<i class="fa-solid fa-star star-pink cal-ico" aria-hidden="true"></i>`;
+        codeHtml = `<span class="cal-code">LVYR</span>`;
+      } else if (primary.type === "leave"){
+        iconHtml = `<i class="fa-solid fa-umbrella-beach leave-amber cal-ico" aria-hidden="true"></i>`;
+        codeHtml = `<span class="cal-code">LV</span>`;
+      } else { // off / rest
+        iconHtml = `<i class="fa-solid fa-star star-pink cal-ico" aria-hidden="true"></i>`;
+        codeHtml = `<span class="cal-code">DEL</span>`;
       }
-      if (primary.type === "training") codeHtml = `<span class="cal-code">${primary.location || "Training"}</span>`;
-      if (primary.type === "report") codeHtml = `<span class="cal-code">${primary.start || ""}</span>`;
-      if (primary.type === "medical") codeHtml = `<span class="cal-code">${primary.start || "Medical"}</span>`;
-      if (primary.type === "reserve") codeHtml = `<span class="cal-code">${reserveLocationLabel(primary)}</span>`;
-      if (primary.type === "layover") codeHtml = `<span class="cal-code">LVYR</span>`;
-      if (primary.type === "leave") codeHtml = `<span class="cal-code">LV</span>`;
-      if (primary.type === "off") codeHtml = `<span class="cal-code">DEL</span>`;
     }
 
-    cells.push(`
-      <button type="button"
-              class="cal-cell ${isToday ? "today" : ""} ${isSelected ? "selected" : ""} ${flightSpanClass ? "flight-span-cell" : ""}"
-              data-date="${dateStr}"
-              ${opts && opts.onSelectFn ? `onclick="${opts.onSelectFn}('${dateStr}')"` : ""}
-              title="${dutyMeaning}"
-              aria-label="${prettyDate(dateStr, {weekday:'long', day:'numeric', month:'long'})}${primary ? ` — ${dutyMeaning}` : ''}">
-        <span>${day}</span>${iconHtml}${codeHtml}${flightSpanClass ? `<span class="flight-span-bar ${flightSpanClass}" aria-hidden="true"></span>` : ""}
-      </button>`);
+    if (opts && opts.isUnpublished){
+      cells.push(`
+        <button type="button" class="cal-cell unpublished-block" data-date="${dateStr}">
+          <span class="cal-num">${day}</span>
+        </button>`);
+    } else {
+      cells.push(`
+        <button type="button"
+                class="cal-cell ${isToday ? "today" : ""} ${isSelected ? "selected" : ""} ${flightSpanClass ? "flight-span-cell" : ""}"
+                data-date="${dateStr}"
+                ${opts && opts.onSelectFn ? `onclick="${opts.onSelectFn}('${dateStr}')"` : ""}
+                title="${dutyMeaning}"
+                aria-label="${prettyDate(dateStr, {weekday:'long', day:'numeric', month:'long'})}${primary ? ` — ${dutyMeaning}` : ''}">
+          <span class="cal-num">${day}</span>${iconHtml}${codeHtml}${flightSpanClass ? `<span class="flight-span-bar ${flightSpanClass}" aria-hidden="true"></span>` : ""}
+        </button>`);
+    }
   }
 
   while (cells.length % 7 !== 0){
@@ -3176,10 +3618,21 @@ function buildCalendarGrid(monthDate, opts){
 
 function renderMonthBlockHTML(year, month){
   const label = new Date(year, month, 1).toLocaleDateString("en-US", { month:"long", year:"numeric" });
-  const gridHtml = buildCalendarGrid(new Date(year, month, 1), { selected: scheduleSelectedDate, eventsMap: SCHEDULE, showFlightSpans: true });
+  const isUnpublished = (year > 2026 || (year === 2026 && month >= 10)); // Nov 2026+
+  const gridHtml = buildCalendarGrid(new Date(year, month, 1), {
+    selected: scheduleSelectedDate,
+    eventsMap: SCHEDULE,
+    showFlightSpans: true,
+    isUnpublished: isUnpublished
+  });
+  const badgeHtml = isUnpublished ? `<span class="unpublished-badge"><i class="fa-solid fa-triangle-exclamation"></i> Unpublished roster</span>` : "";
+
   return `
     <div class="cal-month-block" data-year="${year}" data-month="${month}">
-      <div class="cal-month-heading">${label}</div>
+      <div class="cal-month-heading-row">
+        <div class="cal-month-heading">${label}</div>
+        ${badgeHtml}
+      </div>
       <div class="cal-days">${gridHtml}</div>
     </div>`;
 }
@@ -3220,7 +3673,8 @@ function renderScheduleCalendar(){
   bindScheduleScroll();
 
   const label = scheduleViewMonth.toLocaleDateString("en-US", { month:"long", year:"numeric" });
-  document.getElementById("sched-header-label").textContent = label;
+  const pill = document.getElementById("sched-month-pill-text");
+  if (pill) pill.textContent = label;
 
   const target = container.querySelector(`.cal-month-block[data-year="${scheduleViewMonth.getFullYear()}"][data-month="${scheduleViewMonth.getMonth()}"]`);
   if (target) target.scrollIntoView({ block:"start" });
@@ -3323,7 +3777,10 @@ function updateScheduleHeaderFromScroll(){
   if (scheduleViewMonth.getFullYear() === y && scheduleViewMonth.getMonth() === m) return;
   scheduleViewMonth = new Date(y, m, 1);
   const label = scheduleViewMonth.toLocaleDateString("en-US", { month:"long", year:"numeric" });
-  document.getElementById("sched-header-label").textContent = label;
+  const pillText = document.getElementById("sched-month-pill-text");
+  if (pillText) pillText.textContent = label;
+  const legacyLabel = document.getElementById("sched-header-label");
+  if (legacyLabel) legacyLabel.textContent = label;
   renderScheduleStats();
   updateTodayButton();
 }
@@ -3346,7 +3803,10 @@ function scrollToMonth(year, month, behavior){
   if (block) block.scrollIntoView({ behavior: behavior || "smooth", block:"start" });
   scheduleViewMonth = new Date(year, month, 1);
   const label = scheduleViewMonth.toLocaleDateString("en-US", { month:"long", year:"numeric" });
-  document.getElementById("sched-header-label").textContent = label;
+  const pillText2 = document.getElementById("sched-month-pill-text");
+  if (pillText2) pillText2.textContent = label;
+  const legacyLabel2 = document.getElementById("sched-header-label");
+  if (legacyLabel2) legacyLabel2.textContent = label;
   renderScheduleStats();
   updateTodayButton();
 }
@@ -3591,13 +4051,15 @@ function setScheduleMode(mode){
   if (mode === "list") renderScheduleAgenda();
 }
 function updateTodayButton(){
-  const btn = document.getElementById("sched-today-btn");
+  const btn = document.getElementById("sched-floating-today") || document.getElementById("sched-today-btn");
+  if (!btn) return;
   const isCurrentMonth = scheduleViewMonth.getFullYear() === TODAY.getFullYear() && scheduleViewMonth.getMonth() === TODAY.getMonth();
   btn.classList.toggle("hidden", isCurrentMonth);
 }
 function jumpToToday(){
   scheduleSelectedDate = fmt(TODAY);
   scheduleDetailOpen = true;
+  scheduleViewMonth = new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
   renderScheduleCalendar();
   scrollToMonth(TODAY.getFullYear(), TODAY.getMonth());
   restoreScheduleSelection();
