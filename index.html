@@ -484,6 +484,7 @@ input{ font-family:inherit; }
 #app-root .cal-cell.selected .cal-code{ color:#FFFFFF !important; }
 #app-root .cal-cell.selected .cal-ico.plane-dark{ color:#FFFFFF !important; }
 #app-root .cal-cell.selected .cal-ico.star-pink{ color:#E0247D !important; }
+#app-root .cal-cell.selected i.door-orange{ color:#FDE68A !important; }
 #app-root .cal-cell.selected .flight-span-bar{ background:#CBD5E1 !important; bottom:4px !important; }
 
 /* Unpublished Block Cell (Light Mode) */
@@ -661,6 +662,12 @@ input{ font-family:inherit; }
 }
 :root[data-theme="dark"] #app-root .cal-cell.selected .cal-ico.star-pink{
   color:#FFAFD6 !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell i.door-orange{
+  color:#F59E0B !important;
+}
+:root[data-theme="dark"] #app-root .cal-cell.selected i.door-orange{
+  color:#FDE68A !important;
 }
 :root[data-theme="dark"] #app-root .cal-cell .cal-training-icon rect{
   fill:#381E2B !important; stroke:#FFAFD6 !important;
@@ -2550,8 +2557,12 @@ const ROSTER = {
   "2026-09-23": [{type:"off", note:"Rest"}],
   "2026-09-24": [{type:"off", note:"Rest"}],
   "2026-09-25": [{type:"off", note:"Rest"}],
-  "2026-09-26": [{type:"off", note:"Rest"}],
-  "2026-09-27": [{type:"off", note:"Rest"}],
+  "2026-09-26": [{type:"reserve", reserveLocation:"airport", start:"06:00", end:"14:00", note:"ASBY · Starting Queue 54"}],
+  "2026-09-27": [
+    {type:"flight", flightNo:"AI887", aircraft:"B777-300ER", dep:"DEL", arr:"BOM", depTime:"07:00", arrTime:"09:15", airtime:"02h 15m", note:"Terminal 3 → Terminal 2 · Indira Gandhi International Airport to Chhatrapati Shivaji Maharaj International Airport", crew:{captains:["Vikramaditya Singh"],firstOfficers:["Rishabh Tripathi"],cabin:["Shivani Singh","Rahul Verma","Kritika Reddy","Ankit Sahu","Sayantani Roy","Mayank Bundela","Dimple Bordoloi","Lunkim Haokip","Tenzin Yangchen","Kavita Kullupati","Meera Pillai","Chirag Sen","Shreya Nair","Ananya Iyer","Priya Sharma"]}},
+    {type:"flight", flightNo:"AI888", aircraft:"B777-300ER", dep:"BOM", arr:"DEL", depTime:"11:00", arrTime:"13:10", airtime:"02h 10m", note:"Terminal 2 → Terminal 3 · Chhatrapati Shivaji Maharaj International Airport to Indira Gandhi International Airport", crew:{captains:["Vikramaditya Singh"],firstOfficers:["Rishabh Tripathi"],cabin:["Shivani Singh","Rahul Verma","Kritika Reddy","Ankit Sahu","Sayantani Roy","Mayank Bundela","Dimple Bordoloi","Lunkim Haokip","Tenzin Yangchen","Kavita Kullupati","Meera Pillai","Chirag Sen","Shreya Nair","Ananya Iyer","Priya Sharma"]}},
+    {type:"off", start:"13:10", note:"Post-flight mandatory rest"}
+  ],
   "2026-09-28": [
     {type:"flight", flightNo:"AI185", aircraft:"B777-300ER", dep:"DEL", arr:"YVR", depTime:"03:55", arrTime:"07:35", airtime:"16h 10m", note:"Terminal 3 → Terminal M · Indira Gandhi International Airport to Vancouver International Airport", crew:{captains:["Anny Divya", "Shreyas Kapoor"],firstOfficers:["Rishabh Tripathi", "Amrit Kaur"],cabin:["Manu Kulkarni","Shivani Singh","Kritika Reddy","Priya Sharma","Ananya Iyer","Rahul Verma","Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Sayantani Roy","Tenzin Yangchen","Ankit Sahu","Kavita Kullupati","Meera Pillai","Chirag Sen"]}},
     {type:"layover", location:"Vancouver, BC, Canada", start:"08:35", end:"09:15+1", hotel:{name:"JW Marriott Parq Vancouver", address:"39 Smithe St, Vancouver, BC V6B 0R3, Canada", phone:"+1 604-676-0888", transport:"Airline crew coach from YVR Airport (Terminal M)", checkIn:"08:35 on 28 Sep", checkOut:"09:15 on 29 Sep"}, note:"International layover · 26h 40m · JW Marriott Parq Vancouver"}
@@ -2560,7 +2571,7 @@ const ROSTER = {
     {type:"flight", flightNo:"AI186", aircraft:"B777-300ER", dep:"YVR", arr:"DEL", depTime:"10:15", arrTime:"15:00", airtime:"16h 15m", note:"Terminal M → Terminal 3 · Vancouver International Airport to Indira Gandhi International Airport", crew:{captains:["Anny Divya", "Shreyas Kapoor"],firstOfficers:["Rishabh Tripathi", "Amrit Kaur"],cabin:["Manu Kulkarni","Shivani Singh","Kritika Reddy","Priya Sharma","Ananya Iyer","Rahul Verma","Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Sayantani Roy","Tenzin Yangchen","Ankit Sahu","Kavita Kullupati","Meera Pillai","Chirag Sen"]}}
   ],
   "2026-09-30": [
-    {type:"flight", flightNo:"AI186", aircraft:"B777-300ER", dep:"YVR", arr:"DEL", depTime:"10:15", arrTime:"15:00", airtime:"16h 15m", continuation:true, continuesFrom:"2026-09-29", note:"Terminal M → Terminal 3 · Vancouver International Airport to Indira Gandhi International Airport"},
+    {type:"flight", flightNo:"AI186", aircraft:"B777-300ER", dep:"YVR", arr:"DEL", depTime:"10:15", arrTime:"15:00", airtime:"16h 15m", continuation:true, continuesFrom:"2026-09-29", showExitIcon:true, note:"Terminal M → Terminal 3 · Vancouver International Airport to Indira Gandhi International Airport"},
     {type:"off", start:"15:00", note:"Post-flight mandatory rest after ultra long-haul AI186"}
   ],
   "2026-10-01": [{type:"off", note:"Rest"}],
@@ -3558,7 +3569,12 @@ function buildCalendarGrid(monthDate, opts){
 
       if (primary.type === "flight"){
         const lastFlight = [...events].reverse().find(e => e.type === "flight") || primary;
-        iconHtml = `<i class="fa-solid fa-plane plane-dark cal-ico" aria-hidden="true"></i>`;
+        const isExit = primary.continuation || events.some(e => e.continuation) || primary.showExitIcon || dateStr === "2026-09-30";
+        if (isExit){
+          iconHtml = `<i class="fa-solid fa-right-from-bracket door-orange cal-ico" aria-hidden="true"></i>`;
+        } else {
+          iconHtml = `<i class="fa-solid fa-plane plane-dark cal-ico" aria-hidden="true"></i>`;
+        }
         codeHtml = `<span class="cal-code">${lastFlight.arr || ""}</span>`;
         if (events.some(event => event.type === "off")) dutyMeaning = `${meta.label} to ${lastFlight.arr || "destination"} and Rest`;
       } else if (primary.type === "report"){
