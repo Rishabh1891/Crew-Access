@@ -2075,6 +2075,48 @@ const AIRPORTS = {
       { name:"ATIS",          val:"124.6" },
       { name:"Approach",      val:"128.6 / 132.3" }
     ]
+  },
+  AMD: {
+    name: "Sardar Vallabhbhai Patel International Airport",
+    icao: "VAAH", iata: "AMD",
+    city: "Ahmedabad, Gujarat, India",
+    elevation: "189 ft (58 m)",
+    timezone: "IST (UTC +5:30)",
+    dispatch: "Air India Station Operations, Terminal 2, SVPI Airport, Hansol, Ahmedabad – 380003",
+    frequencies: [
+      { name:"Tower",         val:"118.1 / 118.3" },
+      { name:"Ground",        val:"121.9" },
+      { name:"ATIS",          val:"126.4" },
+      { name:"Approach",      val:"123.9 / 127.9" }
+    ]
+  },
+  FCO: {
+    name: "Leonardo da Vinci–Fiumicino Airport",
+    icao: "LIRF", iata: "FCO",
+    city: "Rome, Italy",
+    elevation: "15 ft (5 m)",
+    timezone: "CEST (UTC +2:00)",
+    dispatch: "Air India Station Operations Office, Terminal 3, Fiumicino Airport, 00054 Fiumicino RM, Italy",
+    frequencies: [
+      { name:"Tower",         val:"118.7 / 120.5" },
+      { name:"Ground",        val:"121.9" },
+      { name:"ATIS",          val:"121.85" },
+      { name:"Approach",      val:"125.5 / 127.45" }
+    ]
+  },
+  EWR: {
+    name: "Newark Liberty International Airport",
+    icao: "KEWR", iata: "EWR",
+    city: "Newark / New York, USA",
+    elevation: "18 ft (5 m)",
+    timezone: "EDT (UTC -4:00)",
+    dispatch: "Air India Station Operations Office, Terminal B, Newark Liberty International Airport, Newark, NJ 07114, USA",
+    frequencies: [
+      { name:"Tower",         val:"118.3 / 127.85" },
+      { name:"Ground",        val:"121.8" },
+      { name:"ATIS",          val:"118.85" },
+      { name:"Approach",      val:"128.55 / 132.8" }
+    ]
   }
 };
 
@@ -2156,25 +2198,107 @@ const ROSTER = {
   "2026-09-23": [{type:"off", note:"Rest"}],
   "2026-09-24": [{type:"off", note:"Rest"}],
   "2026-09-25": [
-    {type:"flight", flightNo:"AIC421", aircraft:"B777-300ER", dep:"DEL", arr:"ATQ", depTime:"08:00", arrTime:"09:20", airtime:"01h 20m", note:"Terminal 3 → Sri Guru Ram Dass Jee International Airport", crew:{captains:["Capt. Iram Habib"],firstOfficers:["Rishabh Tripathi"],cabin:["Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Shivani Malviya","Tenzin Yangchen","Ankit Sahu"]}},
+    {type:"flight", flightNo:"AIC421", aircraft:"B777-300ER", dep:"DEL", arr:"ATQ", depTime:"08:00", arrTime:"09:20", airtime:"01h 20m", note:"Terminal 3 → Sri Guru Ram Dass Jee International Airport", crew:{captains:["Iram Habib"],firstOfficers:["Rishabh Tripathi"],cabin:["Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Shivani Malviya","Tenzin Yangchen","Ankit Sahu"]}},
     {type:"layover", location:"Amritsar, India", start:"10:00", end:"11:30+1", hotel:{name:"Taj Swarna, Amritsar", address:"Majitha Verka Bypass, Amritsar, Punjab 143001", phone:"+91 183 665 8000", transport:"Airline crew coach from ATQ Airport", checkIn:"10:00", checkOut:"11:30 on 26 Sep"}, note:"Domestic layover · Taj Swarna, Amritsar"}
   ],
   "2026-09-26": [
-    {type:"flight", flightNo:"AIC422", aircraft:"B777-300ER", dep:"ATQ", arr:"DEL", depTime:"13:10", arrTime:"14:15", airtime:"01h 05m", note:"Sri Guru Ram Dass Jee International Airport → Terminal 3", crew:{captains:["Capt. Iram Habib"],firstOfficers:["Rishabh Tripathi"],cabin:["Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Shivani Malviya","Tenzin Yangchen","Ankit Sahu"]}},
+    {type:"flight", flightNo:"AIC422", aircraft:"B777-300ER", dep:"ATQ", arr:"DEL", depTime:"13:10", arrTime:"14:15", airtime:"01h 05m", note:"Sri Guru Ram Dass Jee International Airport → Terminal 3", crew:{captains:["Iram Habib"],firstOfficers:["Rishabh Tripathi"],cabin:["Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Shivani Malviya","Tenzin Yangchen","Ankit Sahu"]}},
     {type:"off", start:"14:15", note:"Post-flight mandatory rest"}
   ],
   "2026-09-27": [{type:"off", note:"Rest"}],
   "2026-09-28": [
-    {type:"flight", flightNo:"AI185", aircraft:"B777-300ER", dep:"DEL", arr:"YVR", depTime:"03:55", arrTime:"07:35", airtime:"16h 10m", note:"Terminal 3 → Terminal M · Indira Gandhi International Airport to Vancouver International Airport", crew:{captains:["Capt. Anny Divya", "Capt. Shreyas Kapoor"],firstOfficers:["Rishabh Tripathi", "Amrit Kaur"],cabin:["Manu Kulkarni","Shivani Singh","Kritika Reddy","Priya Sharma","Ananya Iyer","Rahul Verma","Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Sayantani Roy","Tenzin Yangchen","Ankit Sahu","Kavita Kullupati","Meera Pillai","Chirag Sen"]}},
+    {type:"flight", flightNo:"AI185", aircraft:"B777-300ER", dep:"DEL", arr:"YVR", depTime:"03:55", arrTime:"07:35", airtime:"16h 10m", note:"Terminal 3 → Terminal M · Indira Gandhi International Airport to Vancouver International Airport", crew:{captains:["Anny Divya", "Shreyas Kapoor"],firstOfficers:["Rishabh Tripathi", "Amrit Kaur"],cabin:["Manu Kulkarni","Shivani Singh","Kritika Reddy","Priya Sharma","Ananya Iyer","Rahul Verma","Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Sayantani Roy","Tenzin Yangchen","Ankit Sahu","Kavita Kullupati","Meera Pillai","Chirag Sen"]}},
     {type:"layover", location:"Vancouver, BC, Canada", start:"08:35", end:"09:15+1", hotel:{name:"JW Marriott Parq Vancouver", address:"39 Smithe St, Vancouver, BC V6B 0R3, Canada", phone:"+1 604-676-0888", transport:"Airline crew coach from YVR Airport (Terminal M)", checkIn:"08:35 on 28 Sep", checkOut:"09:15 on 29 Sep"}, note:"International layover · 26h 40m · JW Marriott Parq Vancouver"}
   ],
   "2026-09-29": [
-    {type:"flight", flightNo:"AI186", aircraft:"B777-300ER", dep:"YVR", arr:"DEL", depTime:"10:15", arrTime:"15:00", airtime:"16h 15m", note:"Terminal M → Terminal 3 · Vancouver International Airport to Indira Gandhi International Airport", crew:{captains:["Capt. Anny Divya", "Capt. Shreyas Kapoor"],firstOfficers:["Rishabh Tripathi", "Amrit Kaur"],cabin:["Manu Kulkarni","Shivani Singh","Kritika Reddy","Priya Sharma","Ananya Iyer","Rahul Verma","Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Sayantani Roy","Tenzin Yangchen","Ankit Sahu","Kavita Kullupati","Meera Pillai","Chirag Sen"]}}
+    {type:"flight", flightNo:"AI186", aircraft:"B777-300ER", dep:"YVR", arr:"DEL", depTime:"10:15", arrTime:"15:00", airtime:"16h 15m", note:"Terminal M → Terminal 3 · Vancouver International Airport to Indira Gandhi International Airport", crew:{captains:["Anny Divya", "Shreyas Kapoor"],firstOfficers:["Rishabh Tripathi", "Amrit Kaur"],cabin:["Manu Kulkarni","Shivani Singh","Kritika Reddy","Priya Sharma","Ananya Iyer","Rahul Verma","Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Sayantani Roy","Tenzin Yangchen","Ankit Sahu","Kavita Kullupati","Meera Pillai","Chirag Sen"]}}
   ],
   "2026-09-30": [
     {type:"flight", flightNo:"AI186", aircraft:"B777-300ER", dep:"YVR", arr:"DEL", depTime:"10:15", arrTime:"15:00", airtime:"16h 15m", continuation:true, continuesFrom:"2026-09-29", note:"Terminal M → Terminal 3 · Vancouver International Airport to Indira Gandhi International Airport"},
     {type:"off", start:"15:00", note:"Post-flight mandatory rest after ultra long-haul AI186"}
-  ]
+  ],
+  "2026-10-01": [{type:"off", note:"Rest"}],
+  "2026-10-02": [{type:"off", note:"Rest · Gandhi Jayanti"}],
+  "2026-10-03": [
+    {type:"flight", flightNo:"AI423", aircraft:"B777-300ER", dep:"DEL", arr:"AMD", depTime:"09:50", arrTime:"11:40", airtime:"01h 50m", note:"Terminal 3 → Terminal 2 · Indira Gandhi International Airport to Sardar Vallabhbhai Patel International Airport", crew:{captains:["Anny Divya"],firstOfficers:["Rishabh Tripathi"],cabin:["Shivani Singh","Rahul Verma","Kritika Reddy","Ankit Sahu","Sayantani Roy","Mayank Bundela"]}},
+    {type:"layover", location:"Ahmedabad, Gujarat, India", start:"12:30", end:"14:00+2", hotel:{name:"Taj Skyline Ahmedabad", address:"Sankalp Square III, Ambli - Bopal Rd, Ahmedabad, Gujarat 380058", phone:"+91 79 6912 3000", transport:"Airline crew coach from SVPI Airport (AMD)", checkIn:"12:30 on 03 Oct", checkOut:"14:00 on 05 Oct"}, note:"Domestic layover · 51h 25m · Taj Skyline Ahmedabad"}
+  ],
+  "2026-10-04": [
+    {type:"layover", location:"Ahmedabad, Gujarat, India", start:"00:00", end:"23:59", hotel:{name:"Taj Skyline Ahmedabad", address:"Sankalp Square III, Ambli - Bopal Rd, Ahmedabad, Gujarat 380058", phone:"+91 79 6912 3000", transport:"Airline crew coach from SVPI Airport (AMD)", checkIn:"12:30 on 03 Oct", checkOut:"14:00 on 05 Oct"}, note:"Full layover day · Taj Skyline Ahmedabad"}
+  ],
+  "2026-10-05": [
+    {type:"flight", flightNo:"AI424", aircraft:"B777-300ER", dep:"AMD", arr:"DEL", depTime:"15:05", arrTime:"16:35", airtime:"01h 30m", note:"Terminal 2 → Terminal 3 · Sardar Vallabhbhai Patel International Airport to Indira Gandhi International Airport", crew:{captains:["Anny Divya"],firstOfficers:["Rishabh Tripathi"],cabin:["Shivani Singh","Rahul Verma","Kritika Reddy","Ankit Sahu","Sayantani Roy","Mayank Bundela"]}},
+    {type:"off", start:"16:35", note:"Post-flight mandatory rest"}
+  ],
+  "2026-10-06": [{type:"off", note:"Rest"}],
+  "2026-10-07": [
+    {type:"flight", flightNo:"AI805", aircraft:"B777-300ER", dep:"DEL", arr:"BOM", depTime:"20:00", arrTime:"22:25", airtime:"02h 25m", note:"Terminal 3 → Terminal 2 · Indira Gandhi International Airport to Chhatrapati Shivaji Maharaj International Airport", crew:{captains:["Vikramaditya Singh", "Rajiv Nambiar"],firstOfficers:["Rishabh Tripathi", "Devansh Malhotra"],cabin:["Shivani Singh","Rahul Verma","Kritika Reddy","Ankit Sahu","Sayantani Roy","Mayank Bundela","Dimple Bordoloi","Lunkim Haokip","Tenzin Yangchen","Kavita Kullupati","Meera Pillai","Chirag Sen","Shreya Nair","Ananya Iyer","Priya Sharma"]}},
+    {type:"layover", location:"Mumbai, Maharashtra, India", start:"23:15", end:"18:30+1", hotel:{name:"The Lalit Mumbai", address:"Sahar Airport Rd, Navpada, Marol, Andheri East, Mumbai, Maharashtra 400059", phone:"+91 22 6699 2222", transport:"Airline crew coach from CSMIA Airport (BOM)", checkIn:"23:15 on 07 Oct", checkOut:"18:30 on 08 Oct"}, note:"Domestic layover · The Lalit Mumbai"}
+  ],
+  "2026-10-08": [
+    {type:"flight", flightNo:"AI191", aircraft:"B777-300ER", dep:"BOM", arr:"FCO", depTime:"21:40", arrTime:"02:30", airtime:"08h 20m", note:"Chhatrapati Shivaji Maharaj International Airport (Terminal 2) to Leonardo da Vinci–Fiumicino Airport (Rome) · Overnight leg", crew:{captains:["Vikramaditya Singh", "Rajiv Nambiar"],firstOfficers:["Rishabh Tripathi", "Devansh Malhotra"],cabin:["Shivani Singh","Rahul Verma","Kritika Reddy","Ankit Sahu","Sayantani Roy","Mayank Bundela","Dimple Bordoloi","Lunkim Haokip","Tenzin Yangchen","Kavita Kullupati","Meera Pillai","Chirag Sen","Shreya Nair","Ananya Iyer","Priya Sharma"]}}
+  ],
+  "2026-10-09": [
+    {type:"flight", flightNo:"AI191", aircraft:"B777-300ER", dep:"BOM", arr:"FCO", depTime:"21:40", arrTime:"02:30", airtime:"08h 20m", continuation:true, continuesFrom:"2026-10-08", note:"Arrival at Leonardo da Vinci–Fiumicino Airport (Rome) at 02:30 AM"},
+    {type:"report", location:"Rome FCO Terminal 3", start:"02:30", end:"04:00", note:"1 hour 30 minute transit halt at Rome Fiumicino Airport (FCO)"},
+    {type:"flight", flightNo:"AI191", aircraft:"B777-300ER", dep:"FCO", arr:"EWR", depTime:"04:00", arrTime:"07:30", airtime:"09h 30m", note:"Leg 2 · Take-off 04:00 AM (Rome time) → Landing 07:30 AM (Newark time) at Newark Liberty International Airport (Terminal B)", crew:{captains:["Vikramaditya Singh", "Rajiv Nambiar"],firstOfficers:["Rishabh Tripathi", "Devansh Malhotra"],cabin:["Shivani Singh","Rahul Verma","Kritika Reddy","Ankit Sahu","Sayantani Roy","Mayank Bundela","Dimple Bordoloi","Lunkim Haokip","Tenzin Yangchen","Kavita Kullupati","Meera Pillai","Chirag Sen","Shreya Nair","Ananya Iyer","Priya Sharma"]}}
+  ],
+  "2026-10-10": [
+    {type:"layover", location:"New York / Newark, USA", start:"08:45", end:"22:00+1", hotel:{name:"YOTEL New York Times Square", address:"570 10th Ave, New York, NY 10036, United States", phone:"+1 646-449-7700", transport:"Airline crew coach from EWR Airport Terminal B", checkIn:"08:45 on 10 Oct", checkOut:"22:00 on 11 Oct"}, note:"International layover · YOTEL New York Times Square"}
+  ],
+  "2026-10-11": [
+    {type:"layover", location:"New York / Newark, USA", start:"00:00", end:"23:59", hotel:{name:"YOTEL New York Times Square", address:"570 10th Ave, New York, NY 10036, United States", phone:"+1 646-449-7700", transport:"Airline crew coach from EWR Airport Terminal B", checkIn:"08:45 on 10 Oct", checkOut:"22:00 on 11 Oct"}, note:"Full layover day · YOTEL New York Times Square"}
+  ],
+  "2026-10-12": [
+    {type:"flight", flightNo:"AI144", aircraft:"B777-300ER", dep:"EWR", arr:"BOM", depTime:"11:30", arrTime:"13:45", airtime:"14h 45m", note:"Terminal B → Terminal 2 · Newark Liberty International Airport to Chhatrapati Shivaji Maharaj International Airport", crew:{captains:["Vikramaditya Singh", "Rajiv Nambiar"],firstOfficers:["Rishabh Tripathi", "Devansh Malhotra"],cabin:["Shivani Singh","Rahul Verma","Kritika Reddy","Ankit Sahu","Sayantani Roy","Mayank Bundela","Dimple Bordoloi","Lunkim Haokip","Tenzin Yangchen","Kavita Kullupati","Meera Pillai","Chirag Sen","Shreya Nair","Ananya Iyer","Priya Sharma"]}}
+  ],
+  "2026-10-13": [
+    {type:"flight", flightNo:"AI144", aircraft:"B777-300ER", dep:"EWR", arr:"BOM", depTime:"11:30", arrTime:"13:45", airtime:"14h 45m", continuation:true, continuesFrom:"2026-10-12", note:"Terminal B → Terminal 2 · Newark Liberty International Airport to Chhatrapati Shivaji Maharaj International Airport"},
+    {type:"flight", flightNo:"AI2677", aircraft:"A320neo", dep:"BOM", arr:"DEL", depTime:"13:00", arrTime:"15:15", airtime:"02h 15m", isDeadhead:true, note:"Deadhead (DH) positioning flight · Terminal 2 → Terminal 3 · Chhatrapati Shivaji Maharaj International Airport to Indira Gandhi International Airport"},
+    {type:"off", start:"15:15", note:"Post-flight mandatory rest after deadhead positioning AI2677"}
+  ],
+  "2026-10-14": [{type:"off", note:"Rest · Post-pattern mandatory rest"}],
+  "2026-10-15": [{type:"off", note:"Rest"}],
+  "2026-10-16": [{type:"off", note:"Rest"}],
+  "2026-10-17": [
+    {type:"flight", flightNo:"AI161", aircraft:"B777-300ER", dep:"DEL", arr:"LHR", depTime:"02:45", arrTime:"07:30", airtime:"09h 15m", note:"Terminal 3 → Terminal 2 · Indira Gandhi International Airport to London Heathrow Airport", crew:{captains:["Soniya Gupta"],firstOfficers:["Rishabh Tripathi"],cabin:["Shreya Nair","Kritika Reddy","Priya Sharma","Ananya Iyer","Rahul Verma","Kavita Kullupati","Madhuri Sharma","Ankit Vats","Kalyani Mukherji","Meenakshi Sati"]}},
+    {type:"layover", location:"London, United Kingdom", start:"08:30", end:"08:30+1", hotel:{name:"Hilton London Heathrow Airport T4", address:"Heathrow Airport, Terminal 4, Hounslow TW6 3AF, UK", phone:"+44 20 8759 7755", transport:"Direct covered walkway connected to T4", checkIn:"08:30 on 17 Oct", checkOut:"08:30 on 18 Oct"}, note:"International layover · Hilton London Heathrow Airport T4"}
+  ],
+  "2026-10-18": [
+    {type:"layover", location:"London, United Kingdom", start:"00:00", end:"23:59", hotel:{name:"Hilton London Heathrow Airport T4", address:"Heathrow Airport, Terminal 4, Hounslow TW6 3AF, UK", phone:"+44 20 8759 7755", transport:"Direct covered walkway connected to T4", checkIn:"08:30 on 17 Oct", checkOut:"08:30 on 18 Oct"}, note:"Full layover day · Hilton London Heathrow Airport T4"}
+  ],
+  "2026-10-19": [
+    {type:"flight", flightNo:"AI162", aircraft:"B777-300ER", dep:"LHR", arr:"DEL", depTime:"09:45", arrTime:"22:50", airtime:"08h 35m", note:"Terminal 2 → Terminal 3 · London Heathrow Airport to Indira Gandhi International Airport", crew:{captains:["Soniya Gupta"],firstOfficers:["Rishabh Tripathi"],cabin:["Shreya Nair","Kritika Reddy","Priya Sharma","Ananya Iyer","Rahul Verma","Kavita Kullupati","Madhuri Sharma","Ankit Vats","Kalyani Mukherji","Meenakshi Sati"]}},
+    {type:"off", start:"22:50", note:"Post-flight rest"}
+  ],
+  "2026-10-20": [{type:"off", note:"Rest · Post-pattern mandatory rest"}],
+  "2026-10-21": [{type:"off", note:"Rest"}],
+  "2026-10-22": [
+    {type:"flight", flightNo:"AI839", aircraft:"B777-300ER", dep:"DEL", arr:"HYD", depTime:"07:00", arrTime:"09:15", airtime:"02h 15m", note:"Terminal 3 → Rajiv Gandhi International Airport", crew:{captains:["Iram Habib"],firstOfficers:["Rishabh Tripathi"],cabin:["Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Shivani Malviya","Tenzin Yangchen","Ankit Sahu"]}},
+    {type:"layover", location:"Hyderabad, Telangana, India", start:"10:00", end:"09:30+1", hotel:{name:"Novotel Hyderabad Airport", address:"Airport Approach Road, Shamshabad, Hyderabad, Telangana 500108", phone:"+91 40 6625 0000", transport:"Airline crew coach from RGIA Airport", checkIn:"10:00 on 22 Oct", checkOut:"09:30 on 23 Oct"}, note:"Domestic layover · Novotel Hyderabad Airport"}
+  ],
+  "2026-10-23": [
+    {type:"flight", flightNo:"AI840", aircraft:"B777-300ER", dep:"HYD", arr:"DEL", depTime:"10:30", arrTime:"12:45", airtime:"02h 15m", note:"Rajiv Gandhi International Airport → Terminal 3", crew:{captains:["Iram Habib"],firstOfficers:["Rishabh Tripathi"],cabin:["Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Shivani Malviya","Tenzin Yangchen","Ankit Sahu"]}},
+    {type:"off", start:"12:45", note:"Post-flight mandatory rest"}
+  ],
+  "2026-10-24": [{type:"reserve", reserveLocation:"airport", start:"06:00", end:"14:00", note:"ASBY · Airport Standby Reserve T3"}],
+  "2026-10-25": [
+    {type:"flight", flightNo:"AI173", aircraft:"B777-200LR", dep:"DEL", arr:"SFO", depTime:"04:00", arrTime:"07:00", airtime:"15h 30m", note:"Terminal 3 → International Terminal · Indira Gandhi International Airport to San Francisco International Airport", crew:{captains:["Anny Divya", "Shreyas Kapoor"],firstOfficers:["Rishabh Tripathi", "Amrit Kaur"],cabin:["Manu Kulkarni","Shivani Singh","Kritika Reddy","Priya Sharma","Ananya Iyer","Rahul Verma","Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Sayantani Roy","Tenzin Yangchen","Ankit Sahu","Kavita Kullupati","Meera Pillai","Chirag Sen"]}},
+    {type:"layover", location:"San Francisco, CA, USA", start:"08:00", end:"09:30+1", hotel:{name:"Grand Hyatt at SFO", address:"55 South Airport Blvd, San Francisco, CA 94128, United States", phone:"+1 650-452-1234", transport:"AirTrain direct connected to SFO terminals", checkIn:"08:00 on 25 Oct", checkOut:"09:30 on 27 Oct"}, note:"International layover · Grand Hyatt at SFO"}
+  ],
+  "2026-10-26": [
+    {type:"layover", location:"San Francisco, CA, USA", start:"00:00", end:"23:59", hotel:{name:"Grand Hyatt at SFO", address:"55 South Airport Blvd, San Francisco, CA 94128, United States", phone:"+1 650-452-1234", transport:"AirTrain direct connected to SFO terminals", checkIn:"08:00 on 25 Oct", checkOut:"09:30 on 27 Oct"}, note:"Full layover day · Grand Hyatt at SFO"}
+  ],
+  "2026-10-27": [
+    {type:"flight", flightNo:"AI174", aircraft:"B777-200LR", dep:"SFO", arr:"DEL", depTime:"10:30", arrTime:"16:15", airtime:"16h 15m", note:"International Terminal → Terminal 3 · San Francisco International Airport to Indira Gandhi International Airport", crew:{captains:["Anny Divya", "Shreyas Kapoor"],firstOfficers:["Rishabh Tripathi", "Amrit Kaur"],cabin:["Manu Kulkarni","Shivani Singh","Kritika Reddy","Priya Sharma","Ananya Iyer","Rahul Verma","Dimple Bordoloi","Mayank Bundela","Lunkim Haokip","Sayantani Roy","Tenzin Yangchen","Ankit Sahu","Kavita Kullupati","Meera Pillai","Chirag Sen"]}}
+  ],
+  "2026-10-28": [
+    {type:"flight", flightNo:"AI174", aircraft:"B777-200LR", dep:"SFO", arr:"DEL", depTime:"10:30", arrTime:"16:15", airtime:"16h 15m", continuation:true, continuesFrom:"2026-10-27", note:"International Terminal → Terminal 3 · San Francisco International Airport to Indira Gandhi International Airport"},
+    {type:"off", start:"16:15", note:"Post-flight mandatory rest after ultra long-haul AI174"}
+  ],
+  "2026-10-29": [{type:"off", note:"Rest · Post Ultra Long-Haul mandatory FTL rest"}],
+  "2026-10-30": [{type:"training", location:"CAE Simulation Centre, Gurugram", start:"09:00", end:"17:00", note:"B777 Recency & FSTD Refresher Training"}],
+  "2026-10-31": [{type:"off", note:"Rest"}]
 
 
 };
@@ -2193,17 +2317,17 @@ let swapIdCounter = 4;
 /* ==========================================================================
    CREW DIRECTORY FOR DUTY SWAPS
    Crew IDs available for initiating swap:
-   - Captain Zoya Agarwal: 46296492
-   - Captain Anny Divya: 37592648
+   - Zoya Agarwal: 46296492
+   - Anny Divya: 37592648
    - First Officer Amritulya: 00149283
    - First Officer Rohit Lalit Lalla: 10142957
    - First Officer Laxmi Joshi: 39624730
    - First Officer Malishka Rajanna: 42555158
-   - Captain Devika Vahiramuthry: 09628492
+   - Devika Vahiramuthry: 09628492
    ========================================================================== */
 const KNOWN_CREW_MEMBERS = {
   "46296492": {
-    name: "Captain Zoya Agarwal",
+    name: "Zoya Agarwal",
     rank: "Captain",
     crewId: "46296492",
     base: "DEL",
@@ -2211,7 +2335,7 @@ const KNOWN_CREW_MEMBERS = {
     image: "https://upload.wikimedia.org/wikipedia/commons/7/75/Zephyr_property.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=original"
   },
   "37592648": {
-    name: "Captain Anny Divya",
+    name: "Anny Divya",
     rank: "Captain",
     crewId: "37592648",
     base: "DEL",
@@ -2251,7 +2375,7 @@ const KNOWN_CREW_MEMBERS = {
     image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAkoMv2XW3JZTXC5c9rzCLjq7X-XZznTSSYRzHECcFliBpfOs5X5guKz6r&s=10"
   },
   "09628492": {
-    name: "Captain Devika Vahiramuthry",
+    name: "Devika Vahiramuthry",
     rank: "Captain",
     crewId: "09628492",
     base: "MAA",
@@ -2355,7 +2479,47 @@ const OPEN_TIME = [
     airline:"Air India"
   },
   {
-    id:"OT005", flightNums:["AI153","AI154"], route:["DEL","VIE","DEL"],
+    id:"OT005", flightNums:["AI423","AI424"], route:["DEL","AMD","DEL"],
+    startDate:"2026-10-03", endDate:"2026-10-05",
+    depTime:"09:50", arrTime:"16:35+2", duration:"1h 50m",
+    aircraft:"B777-300ER", type:"dom", rank:"fo",
+    slots:1, totalSlots:2,
+    pairing:"P-423/424", sector:"DEL–AMD–DEL",
+    credit:"3h 20m", layover:"Taj Skyline Ahmedabad", layoverHrs:"51h 25m",
+    airline:"Air India"
+  },
+  {
+    id:"OT006", flightNums:["AI805"], route:["DEL","BOM"],
+    startDate:"2026-10-07", endDate:"2026-10-08",
+    depTime:"20:00", arrTime:"22:25", duration:"2h 25m",
+    aircraft:"B777-300ER", type:"dom", rank:"fo",
+    slots:1, totalSlots:2,
+    pairing:"P-805", sector:"DEL–BOM",
+    credit:"2h 25m", layover:"The Lalit Mumbai", layoverHrs:"20h 05m",
+    airline:"Air India"
+  },
+  {
+    id:"OT007", flightNums:["AI191"], route:["FCO","EWR"],
+    startDate:"2026-10-09", endDate:"2026-10-11",
+    depTime:"04:00", arrTime:"07:30", duration:"9h 30m",
+    aircraft:"B777-300ER", type:"intl", rank:"fo",
+    slots:1, totalSlots:2,
+    pairing:"P-191", sector:"FCO–EWR",
+    credit:"9h 30m", layover:"YOTEL New York Times Square", layoverHrs:"38h 30m",
+    airline:"Air India"
+  },
+  {
+    id:"OT008", flightNums:["AI144"], route:["EWR","BOM"],
+    startDate:"2026-10-12", endDate:"2026-10-13",
+    depTime:"11:30", arrTime:"13:45+1", duration:"14h 45m",
+    aircraft:"B777-300ER", type:"intl", rank:"fo",
+    slots:1, totalSlots:2,
+    pairing:"P-144", sector:"EWR–BOM",
+    credit:"14h 45m", layover:null, layoverHrs:null,
+    airline:"Air India"
+  },
+  {
+    id:"OT006", flightNums:["AI153","AI154"], route:["DEL","VIE","DEL"],
     startDate:"2026-09-27", endDate:"2026-09-29",
     depTime:"02:15", arrTime:"08:45+1", duration:"8h 30m",
     aircraft:"B777-200LR", type:"intl", rank:"fo",
@@ -2442,7 +2606,7 @@ const MY_BIDS = [
 /* ---- Mock chat threads ---------------------------------------------------*/
 const CHATS = [
   {
-    name: "Capt. Anny Divya",
+    name: "Anny Divya",
     initials: "AD",
     photo: "https://static.toiimg.com/thumb/msid-68317377,width-400,resizemode-4/68317377.jpg",
     preview: "Giving this to you.😊🛫",
@@ -2474,7 +2638,7 @@ const CHATS = [
     date: "12 Sep"
   },
   {
-    name: "Capt. C. V. Madhu",
+    name: "C. V. Madhu",
     initials: "CV",
     photo: "https://pbs.twimg.com/media/ErtjKC5UcAA88zw?format=jpg&name=900x900",
     preview: "Hey Rishabh, this is the captain CV Madhu. I will be undertaking your flight operations skills on 30th. Please be prepare and all the best. You can ping me here in case of any assistance.",
@@ -2977,15 +3141,15 @@ function buildCalendarGrid(monthDate, opts){
       iconHtml = scheduleImageIcon(primary, "cal-duty-icon-image") ||
         `<i class="fa-solid ${meta.icon} cal-ico" style="--duty-icon-color:${meta.fg}" aria-hidden="true"></i>`;
       if (primary.type === "flight"){
-        const includesRest = events.some(event => event.type === "off");
-        codeHtml = `<span class="cal-code">${primary.arr || ""}${includesRest ? " + Rest" : ""}</span>`;
-        if (includesRest) dutyMeaning = `${meta.label} to ${primary.arr || "destination"} and Rest`;
+        const lastFlight = [...events].reverse().find(e => e.type === "flight") || primary;
+        codeHtml = `<span class="cal-code">${lastFlight.arr || ""}</span>`;
+        if (events.some(event => event.type === "off")) dutyMeaning = `${meta.label} to ${lastFlight.arr || "destination"} and Rest`;
       }
       if (primary.type === "training") codeHtml = `<span class="cal-code">${primary.location || "Training"}</span>`;
       if (primary.type === "report") codeHtml = `<span class="cal-code">${primary.start || ""}</span>`;
       if (primary.type === "medical") codeHtml = `<span class="cal-code">${primary.start || "Medical"}</span>`;
       if (primary.type === "reserve") codeHtml = `<span class="cal-code">${reserveLocationLabel(primary)}</span>`;
-      if (primary.type === "layover") codeHtml = `<span class="cal-code">${(primary.location || "Layover").split(",")[0]}</span>`;
+      if (primary.type === "layover") codeHtml = `<span class="cal-code">LVYR</span>`;
       if (primary.type === "off") codeHtml = `<span class="cal-code">DEL</span>`;
     }
 
@@ -3282,7 +3446,7 @@ function buildDutyRowsHTML(items, dateStr, keyPrefix){
       noteHtml = `<div class="di-note">Continued from ${prettyDate(item.continuesFrom, {day:"numeric", month:"short"})}${item.note ? ` · ${item.note}` : ""}</div>`;
       clickable = false;
     } else if (item.type === "flight"){
-      title = `${item.flightNo} · ${item.dep} → ${item.arr}`;
+      title = item.isDeadhead ? `Deadhead (DH) · ${item.flightNo} · ${item.dep} → ${item.arr}` : `${item.flightNo} · ${item.dep} → ${item.arr}`;
       gridHtml = `
         <div class="di-grid">
           <div class="di-col"><div class="di-label">Departs</div><div class="di-value">${item.dep} ${item.depTime}</div></div>
@@ -3290,9 +3454,9 @@ function buildDutyRowsHTML(items, dateStr, keyPrefix){
           <div class="di-col"><div class="di-label">Arrives</div><div class="di-value">${item.arr} ${item.arrTime}</div></div>
         </div>`;
       const airtime = item.airtime || fmtHrsMins(flightDurationMinutes(item));
-      noteHtml = `<div class="di-note">Airtime · ${airtime}${item.aircraft ? ` · ${item.aircraft}` : ""}${item.note ? ` · ${item.note}` : ""}</div>`;
-      clickable = true;
-      expandHtml = buildCrewListHTML(item);
+      noteHtml = `<div class="di-note">${item.isDeadhead ? "Deadhead (DH) positioning · " : "Airtime · "}${airtime}${item.aircraft ? ` · ${item.aircraft}` : ""}${item.note ? ` · ${item.note}` : ""}</div>`;
+      clickable = !item.isDeadhead;
+      expandHtml = item.isDeadhead ? "" : buildCrewListHTML(item);
     } else if (item.type === "report"){
       title = meta.label;
       gridHtml = `
@@ -3746,7 +3910,8 @@ let placedBids = new Set();   // IDs of open-time pairings user has bid on this 
 const IATA_CITY = {
   DEL:"New Delhi", BOM:"Mumbai", HYD:"Hyderabad", LHR:"London",
   SFO:"San Francisco", JFK:"New York", DXB:"Dubai", SIN:"Singapore",
-  MEL:"Melbourne", MAA:"Chennai", VIE:"Vienna", CCU:"Kolkata", ATQ:"Amritsar"
+  MEL:"Melbourne", MAA:"Chennai", VIE:"Vienna", CCU:"Kolkata", ATQ:"Amritsar",
+  YVR:"Vancouver", AMD:"Ahmedabad", FCO:"Rome", EWR:"Newark"
 };
 
 function getBidPeriodDate(){
