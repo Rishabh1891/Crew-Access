@@ -1779,6 +1779,74 @@ body{ background:var(--bg-outer); }
 .board-action{width:100%;padding:13px;border:0;border-radius:12px;background:var(--card);color:var(--ink);font-weight:600;margin-top:10px}.board-empty{padding:32px 16px;text-align:center;color:var(--ink-soft);line-height:1.7}
 #view-board button:focus-visible{outline:2px solid #19798a;outline-offset:3px}
 
+
+/* Crew Access presentation: shared surfaces, roster hierarchy and touch targets. */
+:root{
+  --navy:#38516B; --cae-blue:#246BBA; --cae-border:#E3E7EE;
+  --bg:#FFFFFF; --card:#F1F2F6; --card-alt:#F8F9FB;
+  --ink:#35465A; --ink-soft:#57677A; --ink-muted:#727F90; --line:#E3E7EE;
+}
+:root[data-theme="dark"]{
+  --navy:#6B9DDD; --cae-blue:#8AB9F1; --cae-border:#334354;
+  --bg:#131D28; --surface:#182431; --card:#202E3D; --card-alt:#1B2836;
+  --ink:#E7EDF5; --ink-soft:#B5C3D3; --ink-muted:#98AABD; --line:#334354;
+}
+#app-root .app-header{padding:18px 18px 14px;border-bottom:1px solid var(--line)}
+.header-date-center{position:static;transform:none;white-space:normal;flex:1;text-align:left;font-size:13px;line-height:1.5}
+.header-date-center::before{content:"CREW ACCESS";display:block;font-size:10px;letter-spacing:1.5px;color:var(--ink-muted);font-weight:700}
+.header-row{gap:12px}.header-icons{gap:2px}
+#app-root .icon-btn{width:40px;height:40px;background:var(--card-alt)}
+#app-root .app-main{padding-bottom:calc(90px + env(safe-area-inset-bottom, 0px))}
+#app-root .upnext-card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:none;padding:20px}
+.upnext-top{gap:10px;align-items:flex-start}.upnext-status{line-height:1.5;text-align:right}
+#app-root .upnext-duty{color:var(--ink);font-size:27px;font-weight:600;letter-spacing:-.7px}
+#app-root .upnext-label{color:var(--ink-soft);letter-spacing:1px;font-size:10px}
+.upnext-grid{border-top:1px solid var(--line);padding-top:16px;gap:12px}
+.up-field{min-width:0}.up-field .up-field-value{font-size:13px;line-height:1.5}
+.up-field .up-field-label{font-size:10px;color:var(--ink-muted)}
+#app-root .upnext-status.published{background:#DDF0E9;color:#276D59}
+#app-root .upnext-status.unpublished{background:#F8DFED;color:#A3306B}
+:root[data-theme="dark"] #app-root .upnext-status.published{background:#21443D;color:#A6E0CC}
+:root[data-theme="dark"] #app-root .upnext-status.unpublished{background:#452D41;color:#F4ABD3}
+#app-root .section-label{color:var(--ink-soft);font-size:10px;letter-spacing:1.2px;margin-top:24px}
+#app-root .qa-circle{width:52px;height:52px;background:var(--card);border:0;box-shadow:none;color:var(--ink-soft);border-radius:17px}
+#app-root .qa-label{color:var(--ink-soft);font-size:10px}
+#app-root .qa-badge{font-size:9px;width:17px;height:17px}
+#app-root .info-card,#app-root .chat-row,#app-root .doc-row,#app-root .swap-card,#app-root .trade-card{box-shadow:none;border:1px solid var(--line);border-radius:12px}
+#app-root .info-card .ic-title{color:var(--ink);font-size:13px}
+#app-root .ic-sub{font-size:11px;line-height:1.6;color:var(--ink-soft)}
+#app-root .sched-top-header{background:var(--surface);border-bottom:1px solid var(--line)}
+#app-root .sched-month-pill{color:var(--ink);background:var(--card);box-shadow:none}
+#app-root .sched-action-circle{width:44px;height:44px;background:var(--card);color:var(--ink)}
+#app-root .cal-weekdays{color:var(--ink-muted);font-size:10px;text-transform:uppercase;letter-spacing:.5px}
+#app-root .cal-cell.selected{background:var(--navy) !important;box-shadow:none !important}
+#app-root .cal-cell.selected i.fa-star{color:#F38CBD !important}
+#app-root .week-detail-slot:not(.hidden),#app-root .day-detail.inline:not(.hidden){background:var(--card-alt);border-color:var(--line);border-radius:12px}
+#app-root .day-detail.inline .duty-item{background:var(--surface);border-color:var(--line)}
+#app-root .sched-floating-today{color:var(--ink);background:var(--surface);border-color:var(--line);bottom:calc(84px + env(safe-area-inset-bottom, 0px));font-size:12px;min-height:44px}
+#app-root .bottom-nav{height:calc(68px + env(safe-area-inset-bottom, 0px));padding-bottom:env(safe-area-inset-bottom, 0px);background:var(--surface);border-color:var(--line);box-shadow:none;backdrop-filter:none}
+#app-root .nav-btn{min-height:48px}
+#app-root .nav-btn.active::after{display:none}
+#app-root .nav-btn span{color:var(--ink-muted);font-size:10px}
+#app-root .nav-btn.active .nav-icon-wrap{background:var(--card);color:var(--cae-blue)}
+#app-root .nav-btn.active span,#app-root .nav-btn.active i{color:var(--cae-blue)}
+#app-root .page-dots{display:none}
+.crew-section-heading{display:flex;align-items:center;justify-content:space-between;margin:24px 2px 10px}
+.crew-section-heading h2{margin:0;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ink-soft)}
+.crew-section-heading button{border:0;background:none;color:var(--cae-blue);font-size:11px;min-height:32px}
+.crew-agenda{border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.crew-agenda-row{width:100%;display:flex;align-items:center;gap:13px;text-align:left;background:var(--surface);color:var(--ink);border:0;border-bottom:1px solid var(--line);padding:14px 12px}
+.crew-agenda-row:last-child{border-bottom:0}.crew-agenda-row:hover{background:var(--card-alt)}
+.crew-agenda-date{width:36px;flex-shrink:0;text-align:center;font-size:9px;text-transform:uppercase;color:var(--ink-muted);line-height:1.6}
+.crew-agenda-date strong{display:block;font-size:20px;font-weight:600;line-height:1.2;color:var(--ink)}
+.crew-agenda-icon{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:var(--card);flex-shrink:0}
+.crew-agenda-copy{flex:1;min-width:0}.crew-agenda-copy strong{display:block;font-size:12px;font-weight:600}
+.crew-agenda-copy small{display:block;font-size:10px;line-height:1.6;color:var(--ink-soft);margin-top:3px}
+.crew-agenda-row>.fa-chevron-right{font-size:10px;color:var(--ink-muted)}
+#app-root button:focus-visible,#app-root [tabindex]:focus-visible{outline:2px solid var(--cae-blue);outline-offset:3px}
+@media(min-width:600px){#app-root{border-left:1px solid var(--line);border-right:1px solid var(--line)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}}
+
 </style>
 </head>
 <body>
@@ -1828,7 +1896,9 @@ body{ background:var(--bg-outer); }
           </button>
         </div>
 
-        <div class="section-label">&nbsp;</div>
+        <div class="crew-section-heading"><h2>Upcoming duties</h2><button type="button" onclick="switchView('schedule')">View roster <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button></div>
+        <div class="crew-agenda" id="dashboard-upcoming"></div>
+        <div class="section-label">Crew updates</div>
         <div class="info-card" onclick="switchView('documents')" style="cursor:pointer;">
           <span class="count-pill" id="doc-warn-count">1</span>
           <div class="ic-body">
@@ -3470,6 +3540,8 @@ function renderDashboard(){
       }`;
   }
 
+  renderUpcomingDuties();
+
   // badges
   const pendingIncoming = SWAPS.filter(s => s.direction === "incoming" && s.status === "pending").length;
   document.getElementById("badge-swaps").textContent = pendingIncoming;
@@ -3502,6 +3574,50 @@ function renderDashboard(){
 /* ==========================================================================
    SCHEDULE / CALENDAR
    ========================================================================== */
+function renderUpcomingDuties(){
+  const container = document.getElementById("dashboard-upcoming");
+  const upcoming = Object.entries(SCHEDULE)
+    .filter(([date, items]) => date > fmt(TODAY) && items.some(item => item.type !== "off"))
+    .sort(([a], [b]) => a.localeCompare(b)).slice(0, 3);
+  container.replaceChildren();
+  if (!upcoming.length){
+    const empty = document.createElement("p");
+    empty.className = "empty-state";
+    empty.textContent = "No upcoming duties in this roster.";
+    container.appendChild(empty);
+  }
+  upcoming.forEach(([date, items]) => {
+    const duty = items.find(item => item.type !== "off");
+    const meta = dutyMeta(duty.type);
+    const row = document.createElement("button");
+    row.type = "button";
+    row.className = "crew-agenda-row";
+    const title = duty.type === "flight" ? `${duty.flightNo} · ${duty.dep} → ${duty.arr}` : meta.label;
+    const timing = duty.type === "flight" ? `${duty.depTime} – ${duty.arrTime}` : [duty.start, duty.end].filter(Boolean).join(" – ");
+    const detail = [timing, duty.type === "flight" ? duty.airtime : duty.note].filter(Boolean).join(" · ");
+    row.innerHTML = `<span class="crew-agenda-date"></span><span class="crew-agenda-icon"><i aria-hidden="true"></i></span><span class="crew-agenda-copy"><strong></strong><small></small></span><i class="fa-solid fa-chevron-right" aria-hidden="true"></i>`;
+    const dateLabel = row.querySelector(".crew-agenda-date");
+    dateLabel.textContent = prettyDate(date, {month:"short"});
+    const day = document.createElement("strong");
+    day.textContent = date.slice(-2);
+    dateLabel.prepend(day);
+    const icon = row.querySelector(".crew-agenda-icon i");
+    icon.className = `fa-solid ${meta.icon}`;
+    icon.style.color = meta.fg;
+    row.querySelector(".crew-agenda-copy strong").textContent = title;
+    row.querySelector("small").textContent = detail;
+    row.setAttribute("aria-label", `${prettyDate(date, {day:"numeric",month:"long",year:"numeric"})}, ${title}, ${detail}`);
+    row.addEventListener("click", () => {
+      scheduleSelectedDate = date;
+      scheduleDetailOpen = false;
+      scheduleViewMonth = new Date(`${date}T12:00:00`);
+      switchView("schedule");
+      selectScheduleDate(date);
+    });
+    container.appendChild(row);
+  });
+}
+
 function getDayDetailHTML(dateStr){
   const items = SCHEDULE[dateStr] || [];
   const hasFlightOrDuty = items.some(i => i.type !== "off");
